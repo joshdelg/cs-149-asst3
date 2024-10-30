@@ -65,7 +65,7 @@ void saxpyCuda(int N, float alpha, float* xarray, float* yarray, float* resultar
     float* device_x = nullptr;
     float* device_y = nullptr;
     float* device_result = nullptr;
-    
+    //POTATO 
     //
     // CS149 TODO: allocate device memory buffers on the GPU using cudaMalloc.
     //
