@@ -53,9 +53,26 @@ void exclusive_scan(int* input, int N, int* result)
     // on the CPU.  Your implementation will need to make multiple calls
     // to CUDA kernel functions (that you must write) to implement the
     // scan.
+   
+    // Upsweep
+    for(int two_d = 1; two_d <= N / 2; two_d *= 2) {
+	int two_dplus1 = 2 * two_d;
 
+	// Parallelize
+    }
+
+    output[N - 1] = 0;
+
+    // Downsweep
+    for(int two_d = N / 2; two_d >= 1; two_d /= 2) {
+	int two_dplus1 = 2 * two_d;
+
+	// Parallelize
+    }
 
 }
+
+__global__
 
 
 //
