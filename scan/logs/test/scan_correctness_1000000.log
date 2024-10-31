@@ -1,0 +1,16 @@
+---------------------------------------------------------
+Found 1 CUDA devices
+Device 0: NVIDIA T4G
+   SMs:        40
+   Global mem: 14918 MB
+   CUDA Cap:   7.5
+---------------------------------------------------------
+Array size: 1000000
+idx 0, two_d 2, two_dplus_1 4
+idx 0, two_d 1, two_dplus_1 2
+idx 0, two_d 2, two_dplus_1 4
+idx 0, two_d 1, two_dplus_1 2
+idx 0, two_d 2, two_dplus_1 4
+idx 0, two_d 1, two_dplus_1 2
+Student GPU time: 0.760 ms
+Scan outputs are correct!

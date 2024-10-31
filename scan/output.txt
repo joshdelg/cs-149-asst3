@@ -1,0 +1,2770 @@
+========= COMPUTE-SANITIZER
+---------------------------------------------------------
+Found 1 CUDA devices
+Device 0: NVIDIA T4G
+   SMs:        40
+   Global mem: 14918 MB
+   CUDA Cap:   7.5
+---------------------------------------------------------
+Array size: 10000000
+Hose: two_d=1, two_d+1=2
+idx 0, i 0, two_d 1, two_dplus_1 2 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=2, two_d+1=4
+idx 0, i 0, two_d 2, two_dplus_1 4 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=4, two_d+1=8
+idx 0, i 0, two_d 4, two_dplus_1 8 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=8, two_d+1=16
+idx 0, i 0, two_d 8, two_dplus_1 16 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=16, two_d+1=32
+idx 0, i 0, two_d 16, two_dplus_1 32 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=32, two_d+1=64
+idx 0, i 0, two_d 32, two_dplus_1 64 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=64, two_d+1=128
+idx 0, i 0, two_d 64, two_dplus_1 128 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=128, two_d+1=256
+idx 0, i 0, two_d 128, two_dplus_1 256 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=256, two_d+1=512
+idx 0, i 0, two_d 256, two_dplus_1 512 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=512, two_d+1=1024
+idx 0, i 0, two_d 512, two_dplus_1 1024 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=1024, two_d+1=2048
+idx 0, i 0, two_d 1024, two_dplus_1 2048 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=2048, two_d+1=4096
+idx 0, i 0, two_d 2048, two_dplus_1 4096 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=4096, two_d+1=8192
+idx 0, i 0, two_d 4096, two_dplus_1 8192 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=8192, two_d+1=16384
+idx 0, i 0, two_d 8192, two_dplus_1 16384 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=16384, two_d+1=32768
+idx 0, i 0, two_d 16384, two_dplus_1 32768 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=32768, two_d+1=65536
+idx 0, i 0, two_d 32768, two_dplus_1 65536 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=65536, two_d+1=131072
+idx 0, i 0, two_d 65536, two_dplus_1 131072 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=131072, two_d+1=262144
+idx 0, i 0, two_d 131072, two_dplus_1 262144 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=262144, two_d+1=524288
+idx 0, i 0, two_d 262144, two_dplus_1 524288 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=524288, two_d+1=1048576
+idx 0, i 0, two_d 524288, two_dplus_1 1048576 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=1048576, two_d+1=2097152
+idx 0, i 0, two_d 1048576, two_dplus_1 2097152 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=2097152, two_d+1=4194304
+idx 0, i 0, two_d 2097152, two_dplus_1 4194304 roundedN 16777216, data 0xea6acbc00000
+Hose: two_d=4194304, two_d+1=8388608
+idx 0, i 0, two_d 4194304, two_dplus_1 8388608 roundedN 16777216, data 0xea6acbc00000
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (160,0,0) in block (0,0,0)
+=========     Address 0xea694dbffffc is out of bounds
+=========     and is 6339690500 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (161,0,0) in block (0,0,0)
+=========     Address 0xea6951bffffc is out of bounds
+=========     and is 6272581636 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (162,0,0) in block (0,0,0)
+=========     Address 0xea6955bffffc is out of bounds
+=========     and is 6205472772 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (163,0,0) in block (0,0,0)
+=========     Address 0xea6959bffffc is out of bounds
+=========     and is 6138363908 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (164,0,0) in block (0,0,0)
+=========     Address 0xea695dbffffc is out of bounds
+=========     and is 6071255044 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (165,0,0) in block (0,0,0)
+=========     Address 0xea6961bffffc is out of bounds
+=========     and is 6004146180 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (166,0,0) in block (0,0,0)
+=========     Address 0xea6965bffffc is out of bounds
+=========     and is 5937037316 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (167,0,0) in block (0,0,0)
+=========     Address 0xea6969bffffc is out of bounds
+=========     and is 5869928452 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (168,0,0) in block (0,0,0)
+=========     Address 0xea696dbffffc is out of bounds
+=========     and is 5802819588 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (169,0,0) in block (0,0,0)
+=========     Address 0xea6971bffffc is out of bounds
+=========     and is 5735710724 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (170,0,0) in block (0,0,0)
+=========     Address 0xea6975bffffc is out of bounds
+=========     and is 5668601860 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (171,0,0) in block (0,0,0)
+=========     Address 0xea6979bffffc is out of bounds
+=========     and is 5601492996 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (172,0,0) in block (0,0,0)
+=========     Address 0xea697dbffffc is out of bounds
+=========     and is 5534384132 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (173,0,0) in block (0,0,0)
+=========     Address 0xea6981bffffc is out of bounds
+=========     and is 5467275268 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (174,0,0) in block (0,0,0)
+=========     Address 0xea6985bffffc is out of bounds
+=========     and is 5400166404 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (175,0,0) in block (0,0,0)
+=========     Address 0xea6989bffffc is out of bounds
+=========     and is 5333057540 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (176,0,0) in block (0,0,0)
+=========     Address 0xea698dbffffc is out of bounds
+=========     and is 5265948676 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (177,0,0) in block (0,0,0)
+=========     Address 0xea6991bffffc is out of bounds
+=========     and is 5198839812 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (178,0,0) in block (0,0,0)
+=========     Address 0xea6995bffffc is out of bounds
+=========     and is 5131730948 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (179,0,0) in block (0,0,0)
+=========     Address 0xea6999bffffc is out of bounds
+=========     and is 5064622084 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (180,0,0) in block (0,0,0)
+=========     Address 0xea699dbffffc is out of bounds
+=========     and is 4997513220 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (181,0,0) in block (0,0,0)
+=========     Address 0xea69a1bffffc is out of bounds
+=========     and is 4930404356 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (182,0,0) in block (0,0,0)
+=========     Address 0xea69a5bffffc is out of bounds
+=========     and is 4863295492 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (183,0,0) in block (0,0,0)
+=========     Address 0xea69a9bffffc is out of bounds
+=========     and is 4796186628 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (184,0,0) in block (0,0,0)
+=========     Address 0xea69adbffffc is out of bounds
+=========     and is 4729077764 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (185,0,0) in block (0,0,0)
+=========     Address 0xea69b1bffffc is out of bounds
+=========     and is 4661968900 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (186,0,0) in block (0,0,0)
+=========     Address 0xea69b5bffffc is out of bounds
+=========     and is 4594860036 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (187,0,0) in block (0,0,0)
+=========     Address 0xea69b9bffffc is out of bounds
+=========     and is 4527751172 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (188,0,0) in block (0,0,0)
+=========     Address 0xea69bdbffffc is out of bounds
+=========     and is 4460642308 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (189,0,0) in block (0,0,0)
+=========     Address 0xea69c1bffffc is out of bounds
+=========     and is 4393533444 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (190,0,0) in block (0,0,0)
+=========     Address 0xea69c5bffffc is out of bounds
+=========     and is 4326424580 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (191,0,0) in block (0,0,0)
+=========     Address 0xea69c9bffffc is out of bounds
+=========     and is 4259315716 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (192,0,0) in block (0,0,0)
+=========     Address 0xea69cdbffffc is out of bounds
+=========     and is 4192206852 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (193,0,0) in block (0,0,0)
+=========     Address 0xea69d1bffffc is out of bounds
+=========     and is 4125097988 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (194,0,0) in block (0,0,0)
+=========     Address 0xea69d5bffffc is out of bounds
+=========     and is 4057989124 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (195,0,0) in block (0,0,0)
+=========     Address 0xea69d9bffffc is out of bounds
+=========     and is 3990880260 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (196,0,0) in block (0,0,0)
+=========     Address 0xea69ddbffffc is out of bounds
+=========     and is 3923771396 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (197,0,0) in block (0,0,0)
+=========     Address 0xea69e1bffffc is out of bounds
+=========     and is 3856662532 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (198,0,0) in block (0,0,0)
+=========     Address 0xea69e5bffffc is out of bounds
+=========     and is 3789553668 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (199,0,0) in block (0,0,0)
+=========     Address 0xea69e9bffffc is out of bounds
+=========     and is 3722444804 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (200,0,0) in block (0,0,0)
+=========     Address 0xea69edbffffc is out of bounds
+=========     and is 3655335940 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (201,0,0) in block (0,0,0)
+=========     Address 0xea69f1bffffc is out of bounds
+=========     and is 3588227076 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (202,0,0) in block (0,0,0)
+=========     Address 0xea69f5bffffc is out of bounds
+=========     and is 3521118212 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (203,0,0) in block (0,0,0)
+=========     Address 0xea69f9bffffc is out of bounds
+=========     and is 3454009348 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (204,0,0) in block (0,0,0)
+=========     Address 0xea69fdbffffc is out of bounds
+=========     and is 3386900484 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (205,0,0) in block (0,0,0)
+=========     Address 0xea6a01bffffc is out of bounds
+=========     and is 3319791620 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (206,0,0) in block (0,0,0)
+=========     Address 0xea6a05bffffc is out of bounds
+=========     and is 3252682756 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (207,0,0) in block (0,0,0)
+=========     Address 0xea6a09bffffc is out of bounds
+=========     and is 3185573892 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (208,0,0) in block (0,0,0)
+=========     Address 0xea6a0dbffffc is out of bounds
+=========     and is 3118465028 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (209,0,0) in block (0,0,0)
+=========     Address 0xea6a11bffffc is out of bounds
+=========     and is 3051356164 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (210,0,0) in block (0,0,0)
+=========     Address 0xea6a15bffffc is out of bounds
+=========     and is 2984247300 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (211,0,0) in block (0,0,0)
+=========     Address 0xea6a19bffffc is out of bounds
+=========     and is 2917138436 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (212,0,0) in block (0,0,0)
+=========     Address 0xea6a1dbffffc is out of bounds
+=========     and is 2850029572 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (213,0,0) in block (0,0,0)
+=========     Address 0xea6a21bffffc is out of bounds
+=========     and is 2782920708 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (214,0,0) in block (0,0,0)
+=========     Address 0xea6a25bffffc is out of bounds
+=========     and is 2715811844 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (215,0,0) in block (0,0,0)
+=========     Address 0xea6a29bffffc is out of bounds
+=========     and is 2648702980 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (216,0,0) in block (0,0,0)
+=========     Address 0xea6a2dbffffc is out of bounds
+=========     and is 2581594116 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (217,0,0) in block (0,0,0)
+=========     Address 0xea6a31bffffc is out of bounds
+=========     and is 2514485252 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (218,0,0) in block (0,0,0)
+=========     Address 0xea6a35bffffc is out of bounds
+=========     and is 2447376388 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (219,0,0) in block (0,0,0)
+=========     Address 0xea6a39bffffc is out of bounds
+=========     and is 2380267524 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (220,0,0) in block (0,0,0)
+=========     Address 0xea6a3dbffffc is out of bounds
+=========     and is 2313158660 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (221,0,0) in block (0,0,0)
+=========     Address 0xea6a41bffffc is out of bounds
+=========     and is 2246049796 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (222,0,0) in block (0,0,0)
+=========     Address 0xea6a45bffffc is out of bounds
+=========     and is 2178940932 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (223,0,0) in block (0,0,0)
+=========     Address 0xea6a49bffffc is out of bounds
+=========     and is 2111832068 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (128,0,0) in block (0,0,0)
+=========     Address 0xea68cdbffffc is out of bounds
+=========     and is 8487174148 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (129,0,0) in block (0,0,0)
+=========     Address 0xea68d1bffffc is out of bounds
+=========     and is 8420065284 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (130,0,0) in block (0,0,0)
+=========     Address 0xea68d5bffffc is out of bounds
+=========     and is 8352956420 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (131,0,0) in block (0,0,0)
+=========     Address 0xea68d9bffffc is out of bounds
+=========     and is 8285847556 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (132,0,0) in block (0,0,0)
+=========     Address 0xea68ddbffffc is out of bounds
+=========     and is 8218738692 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (133,0,0) in block (0,0,0)
+=========     Address 0xea68e1bffffc is out of bounds
+=========     and is 8151629828 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (134,0,0) in block (0,0,0)
+=========     Address 0xea68e5bffffc is out of bounds
+=========     and is 8084520964 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (135,0,0) in block (0,0,0)
+=========     Address 0xea68e9bffffc is out of bounds
+=========     and is 8017412100 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (136,0,0) in block (0,0,0)
+=========     Address 0xea68edbffffc is out of bounds
+=========     and is 7950303236 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (137,0,0) in block (0,0,0)
+=========     Address 0xea68f1bffffc is out of bounds
+=========     and is 7883194372 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (138,0,0) in block (0,0,0)
+=========     Address 0xea68f5bffffc is out of bounds
+=========     and is 7816085508 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (139,0,0) in block (0,0,0)
+=========     Address 0xea68f9bffffc is out of bounds
+=========     and is 7748976644 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (140,0,0) in block (0,0,0)
+=========     Address 0xea68fdbffffc is out of bounds
+=========     and is 7681867780 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (141,0,0) in block (0,0,0)
+=========     Address 0xea6901bffffc is out of bounds
+=========     and is 7614758916 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (142,0,0) in block (0,0,0)
+=========     Address 0xea6905bffffc is out of bounds
+=========     and is 7547650052 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (143,0,0) in block (0,0,0)
+=========     Address 0xea6909bffffc is out of bounds
+=========     and is 7480541188 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (144,0,0) in block (0,0,0)
+=========     Address 0xea690dbffffc is out of bounds
+=========     and is 7413432324 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (145,0,0) in block (0,0,0)
+=========     Address 0xea6911bffffc is out of bounds
+=========     and is 7346323460 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (146,0,0) in block (0,0,0)
+=========     Address 0xea6915bffffc is out of bounds
+=========     and is 7279214596 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (147,0,0) in block (0,0,0)
+=========     Address 0xea6919bffffc is out of bounds
+=========     and is 7212105732 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (148,0,0) in block (0,0,0)
+=========     Address 0xea691dbffffc is out of bounds
+=========     and is 7144996868 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (149,0,0) in block (0,0,0)
+=========     Address 0xea6921bffffc is out of bounds
+=========     and is 7077888004 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (150,0,0) in block (0,0,0)
+=========     Address 0xea6925bffffc is out of bounds
+=========     and is 7010779140 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (151,0,0) in block (0,0,0)
+=========     Address 0xea6929bffffc is out of bounds
+=========     and is 6943670276 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (152,0,0) in block (0,0,0)
+=========     Address 0xea692dbffffc is out of bounds
+=========     and is 6876561412 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (153,0,0) in block (0,0,0)
+=========     Address 0xea6931bffffc is out of bounds
+=========     and is 6809452548 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (154,0,0) in block (0,0,0)
+=========     Address 0xea6935bffffc is out of bounds
+=========     and is 6742343684 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (155,0,0) in block (0,0,0)
+=========     Address 0xea6939bffffc is out of bounds
+=========     and is 6675234820 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (156,0,0) in block (0,0,0)
+=========     Address 0xea693dbffffc is out of bounds
+=========     and is 6608125956 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (157,0,0) in block (0,0,0)
+=========     Address 0xea6941bffffc is out of bounds
+=========     and is 6541017092 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (158,0,0) in block (0,0,0)
+=========     Address 0xea6945bffffc is out of bounds
+=========     and is 6473908228 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Invalid __global__ read of size 4 bytes
+=========     at 0x810 in /home/ubuntu/cs-149-asst3/scan/scan.cu:42:cudaUpsweep(int, int, int, int *, int)
+=========     by thread (159,0,0) in block (0,0,0)
+=========     Address 0xea6949bffffc is out of bounds
+=========     and is 6406799364 bytes before the nearest allocation at 0xea6ac7a00000 of size 67108864 bytes
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x2a5a34]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame: [0x15be0]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:cudaLaunchKernel [0x662f8]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:43:cudaUpsweep(int, int, int, int*, int) [0x37f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:101:exclusive_scan(int*, int, int*) [0x39e8]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Program hit cudaErrorLaunchFailure (error 719) due to "unspecified launch failure" on CUDA API call to cudaDeviceSynchronize.
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame: [0x3d1308]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame:cudaDeviceSynchronize [0x45af4]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:94:exclusive_scan(int*, int, int*) [0x39ec]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:159:cudaScan(int*, int*, int*) [0x3af0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Program hit cudaErrorLaunchFailure (error 719) due to "unspecified launch failure" on CUDA API call to cudaDeviceSynchronize.
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame: [0x3d1308]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame:cudaDeviceSynchronize [0x45af4]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:160:cudaScan(int*, int*, int*) [0x3af4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Program hit cudaErrorLaunchFailure (error 719) due to "unspecified launch failure" on CUDA API call to cudaMemcpy.
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame: [0x3d1308]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame:cudaMemcpy [0x61e58]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:154:cudaScan(int*, int*, int*) [0x3b34]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+========= Program hit cudaErrorLaunchFailure (error 719) due to "unspecified launch failure" on CUDA API call to cudaMalloc.
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame: [0x3d1308]
+=========                in /lib/aarch64-linux-gnu/libcuda.so.1
+=========     Host Frame:cudaMalloc [0x4ef9c]
+=========                in /usr/local/cuda-12.1/lib64/libcudart.so.12
+=========     Host Frame:/home/ubuntu/cs-149-asst3/scan/scan.cu:144:cudaScan(int*, int*, int*) [0x3a80]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame:main [0x2bc4]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+=========     Host Frame: [0x273fc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:__libc_start_main [0x274cc]
+=========                in /lib/aarch64-linux-gnu/libc.so.6
+=========     Host Frame:_start [0x32f0]
+=========                in /home/ubuntu/cs-149-asst3/scan/./cudaScan
+========= 
+Hose: two_d=8388608, two_d+1=16777216
+Hose: two_d=1, two_d+1=2
+Hose: two_d=2, two_d+1=4
+Hose: two_d=4, two_d+1=8
+Hose: two_d=8, two_d+1=16
+Hose: two_d=16, two_d+1=32
+Hose: two_d=32, two_d+1=64
+Hose: two_d=64, two_d+1=128
+Hose: two_d=128, two_d+1=256
+Hose: two_d=256, two_d+1=512
+Hose: two_d=512, two_d+1=1024
+Hose: two_d=1024, two_d+1=2048
+Hose: two_d=2048, two_d+1=4096
+Hose: two_d=4096, two_d+1=8192
+Hose: two_d=8192, two_d+1=16384
+Hose: two_d=16384, two_d+1=32768
+Hose: two_d=32768, two_d+1=65536
+Hose: two_d=65536, two_d+1=131072
+Hose: two_d=131072, two_d+1=262144
+Hose: two_d=262144, two_d+1=524288
+Hose: two_d=524288, two_d+1=1048576
+Hose: two_d=1048576, two_d+1=2097152
+Hose: two_d=2097152, two_d+1=4194304
+Hose: two_d=4194304, two_d+1=8388608
+Hose: two_d=8388608, two_d+1=16777216
+Hose: two_d=1, two_d+1=2
+Hose: two_d=2, two_d+1=4
+Hose: two_d=4, two_d+1=8
+Hose: two_d=8, two_d+1=16
+Hose: two_d=16, two_d+1=32
+Hose: two_d=32, two_d+1=64
+Hose: two_d=64, two_d+1=128
+Hose: two_d=128, two_d+1=256
+Hose: two_d=256, two_d+1=512
+Hose: two_d=512, two_d+1=1024
+Hose: two_d=1024, two_d+1=2048
+Hose: two_d=2048, two_d+1=4096
+Hose: two_d=4096, two_d+1=8192
+Hose: two_d=8192, two_d+1=16384
+Hose: two_d=16384, two_d+1=32768
+Hose: two_d=32768, two_d+1=65536
+Hose: two_d=65536, two_d+1=131072
+Hose: two_d=131072, two_d+1=262144
+Hose: two_d=262144, two_d+1=524288
+Hose: two_d=524288, two_d+1=1048576
+Hose: two_d=1048576, two_d+1=2097152
+Hose: two_d=2097152, two_d+1=4194304
+Hose: two_d=4194304, two_d+1=8388608
+Hose: two_d=8388608, two_d+1=16777216
+Student GPU time: 12.174 ms
+========= Target application returned an error
+========= ERROR SUMMARY: 207 errors
+========= ERROR SUMMARY: 107 errors were not printed. Use --print-limit option to adjust the number of printed errors

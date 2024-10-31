@@ -27,6 +27,40 @@ static inline int nextPow2(int n) {
     return n;
 }
 
+__global__ void cudaUpsweep(int N, int two_d, int two_dplus_1, int* data, int roundedN) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x; // Thread index
+    long long i = idx * two_dplus_1; // Actual element index
+    if(i == 0) printf("idx %d, i %d, two_d %d, two_dplus_1 %d roundedN %d, data %p\n", idx, i, two_d, two_dplus_1, roundedN, data);
+    if(i + two_dplus_1 - 1 >= roundedN) return;
+
+    // if(two_d >= 128) {
+    //     printf("idx %d, i %d, two_d %d, two_dplus_1 %d roundedN %d\n", idx, i, two_d, two_dplus_1, roundedN);
+    // }
+
+    // printf("Element index %d\n", i);
+
+    data[i + two_dplus_1 - 1] += data[i + two_d - 1];
+}
+
+__global__ void cudaDownsweep(int N, int two_d, int two_dplus_1, int* data, int pow2N) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x; // Thread index
+    long long i = idx * two_dplus_1; // Actual element index
+    // printf("Hello!\n");
+    if(i == 0) printf("idx %d, i %d, two_d %d, two_dplus_1 %d roundedN %d\n", idx, i, two_d, two_dplus_1, pow2N);
+    if(i + two_dplus_1 - 1 >= pow2N) return;
+
+    int t = data[i + two_d - 1];
+    data[i + two_d - 1] = data[i + two_dplus_1 - 1];
+    data[i + two_dplus_1 - 1] += t;
+}
+
+__global__ void cudaMiddleStep(int* data, int pow2N) {
+    if(blockIdx.x * blockDim.x + threadIdx.x == 0) {
+        data[pow2N - 1] = 0;
+        printf("Element i ndex middle  step %d\n", pow2N - 1);
+    }
+}
+
 // exclusive_scan --
 //
 // Implementation of an exclusive scan on global memory array `input`,
@@ -53,27 +87,34 @@ void exclusive_scan(int* input, int N, int* result)
     // on the CPU.  Your implementation will need to make multiple calls
     // to CUDA kernel functions (that you must write) to implement the
     // scan.
-   
+
     // Upsweep
-    for(int two_d = 1; two_d <= N / 2; two_d *= 2) {
-	int two_dplus1 = 2 * two_d;
+    int roundedN = nextPow2(N);
 
-	// Parallelize
+    for(int two_d = 1; two_d <= roundedN / 2; two_d *= 2) {
+	    int two_dplus1 = 2 * two_d;
+
+        int ops = roundedN / two_dplus1;
+        int numBlocks = (ops + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+        printf("Hose: two_d=%d, two_d+1=%d\n", two_d, two_dplus1);
+	    cudaUpsweep<<<numBlocks, THREADS_PER_BLOCK>>>(N, two_d, two_dplus1, result, roundedN);
+        cudaDeviceSynchronize();
     }
 
-    output[N - 1] = 0;
+    // cudaMiddleStep<<<1, THREADS_PER_BLOCK>>>(result, roundedN);
+    // cudaDeviceSynchronize();
 
-    // Downsweep
-    for(int two_d = N / 2; two_d >= 1; two_d /= 2) {
-	int two_dplus1 = 2 * two_d;
-
-	// Parallelize
-    }
-
+    // // Downsweep
+    // for(int two_d = roundedN / 2; two_d >= 1; two_d /= 2) {
+	//     int two_dplus1 = 2 * two_d;
+        
+    //     int ops = roundedN / two_dplus1;
+    //     int numBlocks = (ops + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+    //     printf("Hose: two_d=%d, two_d+1=%d\n", two_d, two_dplus1);
+    //     cudaDownsweep<<<numBlocks, THREADS_PER_BLOCK>>>(N, two_d, two_dplus1, result, roundedN);
+    //     cudaDeviceSynchronize();
+    // }
 }
-
-__global__
-
 
 //
 // cudaScan --
