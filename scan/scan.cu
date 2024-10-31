@@ -27,26 +27,19 @@ static inline int nextPow2(int n) {
     return n;
 }
 
-__global__ void cudaUpsweep(int N, int two_d, int two_dplus_1, int* data, int roundedN) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x; // Thread index
+__global__ void cudaUpsweep(long long N, long long two_d, long long two_dplus_1, int* data, long long roundedN) {
+    long long idx = blockIdx.x * blockDim.x + threadIdx.x; // Thread index
     long long i = idx * two_dplus_1; // Actual element index
-    if(i == 0) printf("idx %d, i %d, two_d %d, two_dplus_1 %d roundedN %d, data %p\n", idx, i, two_d, two_dplus_1, roundedN, data);
+
     if(i + two_dplus_1 - 1 >= roundedN) return;
-
-    // if(two_d >= 128) {
-    //     printf("idx %d, i %d, two_d %d, two_dplus_1 %d roundedN %d\n", idx, i, two_d, two_dplus_1, roundedN);
-    // }
-
-    // printf("Element index %d\n", i);
 
     data[i + two_dplus_1 - 1] += data[i + two_d - 1];
 }
 
-__global__ void cudaDownsweep(int N, int two_d, int two_dplus_1, int* data, int pow2N) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x; // Thread index
+__global__ void cudaDownsweep(long long N, long long two_d, long long two_dplus_1, int* data, long long pow2N) {
+    long long idx = blockIdx.x * blockDim.x + threadIdx.x; // Thread index
     long long i = idx * two_dplus_1; // Actual element index
-    // printf("Hello!\n");
-    if(i == 0) printf("idx %d, i %d, two_d %d, two_dplus_1 %d roundedN %d\n", idx, i, two_d, two_dplus_1, pow2N);
+
     if(i + two_dplus_1 - 1 >= pow2N) return;
 
     int t = data[i + two_d - 1];
@@ -54,10 +47,9 @@ __global__ void cudaDownsweep(int N, int two_d, int two_dplus_1, int* data, int 
     data[i + two_dplus_1 - 1] += t;
 }
 
-__global__ void cudaMiddleStep(int* data, int pow2N) {
+__global__ void cudaMiddleStep(int* data, long long pow2N) {
     if(blockIdx.x * blockDim.x + threadIdx.x == 0) {
         data[pow2N - 1] = 0;
-        printf("Element i ndex middle  step %d\n", pow2N - 1);
     }
 }
 
@@ -89,31 +81,31 @@ void exclusive_scan(int* input, int N, int* result)
     // scan.
 
     // Upsweep
-    int roundedN = nextPow2(N);
+    long long roundedN = nextPow2(N);
 
     for(int two_d = 1; two_d <= roundedN / 2; two_d *= 2) {
 	    int two_dplus1 = 2 * two_d;
 
         int ops = roundedN / two_dplus1;
         int numBlocks = (ops + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
-        printf("Hose: two_d=%d, two_d+1=%d\n", two_d, two_dplus1);
+
 	    cudaUpsweep<<<numBlocks, THREADS_PER_BLOCK>>>(N, two_d, two_dplus1, result, roundedN);
         cudaDeviceSynchronize();
     }
 
-    // cudaMiddleStep<<<1, THREADS_PER_BLOCK>>>(result, roundedN);
-    // cudaDeviceSynchronize();
+    cudaMiddleStep<<<1, THREADS_PER_BLOCK>>>(result, roundedN);
+    cudaDeviceSynchronize();
 
-    // // Downsweep
-    // for(int two_d = roundedN / 2; two_d >= 1; two_d /= 2) {
-	//     int two_dplus1 = 2 * two_d;
+    // Downsweep
+    for(int two_d = roundedN / 2; two_d >= 1; two_d /= 2) {
+	    int two_dplus1 = 2 * two_d;
         
-    //     int ops = roundedN / two_dplus1;
-    //     int numBlocks = (ops + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
-    //     printf("Hose: two_d=%d, two_d+1=%d\n", two_d, two_dplus1);
-    //     cudaDownsweep<<<numBlocks, THREADS_PER_BLOCK>>>(N, two_d, two_dplus1, result, roundedN);
-    //     cudaDeviceSynchronize();
-    // }
+        int ops = roundedN / two_dplus1;
+        int numBlocks = (ops + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+
+        cudaDownsweep<<<numBlocks, THREADS_PER_BLOCK>>>(N, two_d, two_dplus1, result, roundedN);
+        cudaDeviceSynchronize();
+    }
 }
 
 //

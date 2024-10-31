@@ -6,4 +6,5 @@ Device 0: NVIDIA T4G
    CUDA Cap:   7.5
 ---------------------------------------------------------
 Array size: 10000000
-Student GPU time: 0.026 ms
+Student GPU time: 8.199 ms
+Scan outputs are correct!

@@ -36,7 +36,6 @@ void cpu_exclusive_scan(int* start, int* end, int* output) {
     
     // upsweep phase
     for (int twod = 1; twod < N/2; twod*=2) {
-        printf("Upsweep twod %d\n", twod);
         int twod1 = twod*2;
 	
         for (int i = 0; i < N; i += twod1) {
@@ -49,7 +48,6 @@ void cpu_exclusive_scan(int* start, int* end, int* output) {
 
     // downsweep phase
     for (int twod = N/2; twod >= 1; twod /= 2) {
-        printf("Downsweep twod %d\n", twod);
         int twod1 = twod*2;
         for (int i = 0; i < N; i += twod1) {
             int tmp = output[i+twod-1];
@@ -57,8 +55,6 @@ void cpu_exclusive_scan(int* start, int* end, int* output) {
             output[i+twod1-1] = tmp + output[i+twod1-1];
         }
     }
-
-    printf("Finished!\n");
 
 #else    
     int N = end - start;

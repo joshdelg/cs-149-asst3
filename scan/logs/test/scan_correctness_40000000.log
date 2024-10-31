@@ -5,6 +5,6 @@ Device 0: NVIDIA T4G
    Global mem: 14918 MB
    CUDA Cap:   7.5
 ---------------------------------------------------------
-Array size: 10000000
-Student GPU time: 8.234 ms
+Array size: 40000000
+Student GPU time: 31.387 ms
 Scan outputs are correct!

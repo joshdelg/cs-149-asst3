@@ -6,11 +6,5 @@ Device 0: NVIDIA T4G
    CUDA Cap:   7.5
 ---------------------------------------------------------
 Array size: 1000000
-idx 0, two_d 2, two_dplus_1 4
-idx 0, two_d 1, two_dplus_1 2
-idx 0, two_d 2, two_dplus_1 4
-idx 0, two_d 1, two_dplus_1 2
-idx 0, two_d 2, two_dplus_1 4
-idx 0, two_d 1, two_dplus_1 2
-Student GPU time: 0.747 ms
+Student GPU time: 0.756 ms
 Scan outputs are correct!
