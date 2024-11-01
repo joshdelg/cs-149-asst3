@@ -223,9 +223,11 @@ double cudaFindRepeats(int *input, int length, int *output, int *output_length) 
 
     int *device_input;
     int *device_output;
+    bool *positions_mask; //positions[i] = 1 if the device_input[i] = device input[i+1] 
     int rounded_length = nextPow2(length);
     
     cudaMalloc((void **)&device_input, rounded_length * sizeof(int));
+    cudaMalloc((void **)&positions_mask, rounded_length * sizeof(bool));
     cudaMalloc((void **)&device_output, rounded_length * sizeof(int));
     cudaMemcpy(device_input, input, length * sizeof(int), cudaMemcpyHostToDevice);
 
