@@ -214,6 +214,20 @@ int find_repeats(int* device_input, int length, int* device_output) {
     return 0; 
 }
 
+__global__ void pair_and_compare(int* input_data, bool* positions_mask, int length)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x; //establish thread identity 
+    if (idx >= length - 1) return; //is it possible that the input_data size is smalled than the length? 
+    if (input_data[idx] == input_data[idx + 1]) {
+        positions_mask[idx] = 1;
+    } 
+    else {
+        positions_mask[idx] = 0;
+    }
+
+
+}
+
 
 //
 // cudaFindRepeats --
@@ -227,7 +241,7 @@ double cudaFindRepeats(int *input, int length, int *output, int *output_length) 
     int rounded_length = nextPow2(length);
     
     cudaMalloc((void **)&device_input, rounded_length * sizeof(int));
-    cudaMalloc((void **)&positions_mask, rounded_length * sizeof(bool));
+    cudaMalloc((void **)&positions_mask, rounded_length * sizeof(bool)); //allocate memory for positions_mask
     cudaMalloc((void **)&device_output, rounded_length * sizeof(int));
     cudaMemcpy(device_input, input, length * sizeof(int), cudaMemcpyHostToDevice);
 
