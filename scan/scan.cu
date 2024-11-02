@@ -197,7 +197,7 @@ double cudaScanThrust(int* inarray, int* end, int* resultarray) {
 // indices `i` for which `device_input[i] == device_input[i+1]`.
 //
 // Returns the total number of pairs found
-int find_repeats(int* device_input, int length, int* device_output) {
+int find_repeats(int* device_input, int length, int* device_output, bool *positions_mask) {
 
     // CS149 TODO:
     //
@@ -228,9 +228,9 @@ int find_repeats(int* device_input, int length, int* device_output) {
     int output_length = dev_mask_ptr[length - 1];
 
     // Return the count of repeated elements
-    return output_length;
+    //return output_length;
 
-    //return 0; 
+    return 0; 
 }
 
 
@@ -266,7 +266,7 @@ double cudaFindRepeats(int *input, int length, int *output, int *output_length) 
 
     int *device_input;
     int *device_output;
-    // bool *positions_mask; //positions[i] = 1 if the device_input[i] = device input[i+1] 
+    bool *positions_mask; //positions[i] = 1 if the device_input[i] = device input[i+1] 
     int rounded_length = nextPow2(length);
     
     cudaMalloc((void **)&device_input, rounded_length * sizeof(int));
