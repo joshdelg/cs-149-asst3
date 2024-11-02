@@ -190,6 +190,28 @@ double cudaScanThrust(int* inarray, int* end, int* resultarray) {
     return overallDuration; 
 }
 
+__global__ void pair_and_compare(int* input_data, int* positions_mask, int length){
+    int idx = blockIdx.x * blockDim.x + threadIdx.x; //establish thread identity 
+    if (idx >= length - 1) return; //is it possible that the input_data size is smalled than the length? 
+    if (input_data[idx] == input_data[idx + 1]) {
+        positions_mask[idx] = 1;
+    } 
+    else {
+        positions_mask[idx] = 0;
+    }
+}
+
+__global__ void cuda_identify_transition_points(int* prefix_sum_array, int* result, int length) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x; // Unique thread index
+
+    if (idx >= length - 1) return; // Ensure we stay within bounds for idx + 1
+
+    // Check if we have a transition point
+    if (prefix_sum_array[idx + 1] == prefix_sum_array[idx] + 1) {
+        result[prefix_sum_array[idx]] = idx;
+    }
+}
+
 
 // find_repeats --
 //
@@ -233,28 +255,6 @@ int find_repeats(int* device_input, int length, int* device_output, int *positio
     return 0; 
 }
 
-
-__global__ void pair_and_compare(int* input_data, int* positions_mask, int length){
-    int idx = blockIdx.x * blockDim.x + threadIdx.x; //establish thread identity 
-    if (idx >= length - 1) return; //is it possible that the input_data size is smalled than the length? 
-    if (input_data[idx] == input_data[idx + 1]) {
-        positions_mask[idx] = 1;
-    } 
-    else {
-        positions_mask[idx] = 0;
-    }
-}
-
-__global__ void cuda_identify_transition_points(int* prefix_sum_array, int* result, int length) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x; // Unique thread index
-
-    if (idx >= length - 1) return; // Ensure we stay within bounds for idx + 1
-
-    // Check if we have a transition point
-    if (prefix_sum_array[idx + 1] == prefix_sum_array[idx] + 1) {
-        result[prefix_sum_array[idx]] = idx;
-    }
-}
 
 
 
