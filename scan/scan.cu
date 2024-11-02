@@ -211,7 +211,26 @@ int find_repeats(int* device_input, int length, int* device_output) {
     // must ensure that the results of find_repeats are correct given
     // the actual array length.
 
-    return 0; 
+    // Step 1: Call pair_and_compare to populate positions_mask
+    int numBlocks = (length + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+    pair_and_compare<<<numBlocks, THREADS_PER_BLOCK>>>(device_input, positions_mask, length);
+    cudaDeviceSynchronize();
+
+    // Step 2: Perform an exclusive scan on positions_mask (keeping it on the GPU)
+    exclusive_scan(positions_mask, length, positions_mask); // Result remains in positions_mask
+    // cudaDeviceSynchronize(); //do we need this? 
+
+    // Step 3: Identify transition points using cuda_identify_transition_points
+    cuda_identify_transition_points<<<numBlocks, THREADS_PER_BLOCK>>>(positions_mask, device_output, length);
+    cudaDeviceSynchronize();
+
+    // Step 4: Get the last element of positions_mask as output length using Thrust
+    int output_length = dev_mask_ptr[length - 1];
+
+    // Return the count of repeated elements
+    return output_length;
+
+    //return 0; 
 }
 
 
@@ -247,7 +266,7 @@ double cudaFindRepeats(int *input, int length, int *output, int *output_length) 
 
     int *device_input;
     int *device_output;
-    bool *positions_mask; //positions[i] = 1 if the device_input[i] = device input[i+1] 
+    // bool *positions_mask; //positions[i] = 1 if the device_input[i] = device input[i+1] 
     int rounded_length = nextPow2(length);
     
     cudaMalloc((void **)&device_input, rounded_length * sizeof(int));
