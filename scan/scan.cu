@@ -241,13 +241,15 @@ int find_repeats(int* device_input, int length, int* device_output, int *positio
     // Step 2: Perform an exclusive scan on positions_mask (keeping it on the GPU)
     exclusive_scan(positions_mask, length, positions_mask); // Result remains in positions_mask
     // cudaDeviceSynchronize(); //do we need this? 
+
+    // Step 3: Get the last element of positions_mask which now consistes of the sum of the total repeats
     int result = positions_mask[length - 1]; // Get the last element of positions_mask
-    // Step 3: Identify transition points using cuda_identify_transition_points
+    
+    // Step 4: Identify transition points using cuda_identify_transition_points
     cuda_identify_transition_points<<<numBlocks, THREADS_PER_BLOCK>>>(positions_mask, device_output, length);
     cudaDeviceSynchronize();
 
-    // Step 4: Get the last element of positions_mask as output length using Thrust
-    int output_length = dev_mask_ptr[length - 1];
+
 
     // Return the count of repeated elements
     //return output_length;
