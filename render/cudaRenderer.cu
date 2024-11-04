@@ -379,6 +379,42 @@ shadePixel(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
     // END SHOULD-BE-ATOMIC REGION
 }
 
+//
+// Each thread processes a circle. 
+// There are 4 arrays, one for each quadrant 
+// The thread draws a bounding box, and assigns it to the quadrant
+// Where do I CUDA memcopy? 
+
+__global__ void kernelBucketCircles() {
+    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    if (index >= cuConstRendererParams.numCircles)
+        return;
+
+    int index3 = 3 * index;
+
+    // read position and radius
+    float3 p = *(float3*)(&cuConstRendererParams.position[index3]);
+    float  rad = cuConstRendererParams.radius[index];
+
+    // compute the bounding box of the circle. The bound is in integer
+    // screen coordinates, so it's clamped to the edges of the screen.
+    short imageWidth = cuConstRendererParams.imageWidth;
+    short imageHeight = cuConstRendererParams.imageHeight;
+    short minX = static_cast<short>(imageWidth * (p.x - rad));
+    short maxX = static_cast<short>(imageWidth * (p.x + rad)) + 1;
+    short minY = static_cast<short>(imageHeight * (p.y - rad));
+    short maxY = static_cast<short>(imageHeight * (p.y + rad)) + 1;
+
+    // a bunch of clamps.  Is there a CUDA built-in for this?
+    short screenMinX = (minX > 0) ? ((minX < imageWidth) ? minX : imageWidth) : 0;
+    short screenMaxX = (maxX > 0) ? ((maxX < imageWidth) ? maxX : imageWidth) : 0;
+    short screenMinY = (minY > 0) ? ((minY < imageHeight) ? minY : imageHeight) : 0;
+    short screenMaxY = (maxY > 0) ? ((maxY < imageHeight) ? maxY : imageHeight) : 0;
+
+    //logic to go through screenMinX, screenMaxX, screenMinY and screenMaxY
+    //asign it to one of the masks? 
+    //how do to do this? 
+}
 // kernelRenderCircles -- (CUDA device code)
 //
 // Each thread renders a pixel. This should order and atomicity
