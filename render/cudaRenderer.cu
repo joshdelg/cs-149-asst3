@@ -386,8 +386,6 @@ shadePixel(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
 // Where do I CUDA memcopy? 
 
 __global__ void kernelBucketCircles(int* mask_ptr, int num_buckets,short bucket_size_x, short bucket_size_y) {
-    // short imageWidth = cuConstRendererParams.imageWidth;
-    // short imageHeight = cuConstRendererParams.imageHeight;
 
 
     int index = blockIdx.x * blockDim.x + threadIdx.x;
@@ -417,7 +415,7 @@ __global__ void kernelBucketCircles(int* mask_ptr, int num_buckets,short bucket_
 
     //coordinates: (screenMinX, screenMinY), (screenMinX, screenMaxY), (screenMaxX,screenMinY), (screenMaxX,screenMaxY)
     
-    //take care of 
+    //assign buckets, for all the coordinates 
     int bucket_xidx_min = screenMinX/ bucket_size_x;
     int bucket_xidx_max = screenMaxX/ bucket_size_x;
     int bucket_yidx_min = screenMinY/ bucket_size_y;
@@ -699,19 +697,30 @@ CudaRenderer::render() {
     //dim3 gridDim(4,4);
     //(a+b-1)/(b) === ceil(a/b)
 
-    int num_buckets = 4; // MODIFY IF WANTED 
-    num_buckets = num_buckets * num_buckets //square 
-    //allocate mask arrays on cuda. Do we need to initialise to zero?
-    //cudaMalloc 
-    int* mask_ptr; 
+
+    // Define the number of buckets and bucket sizes
+    int dim_buckets = 4; // MODIFY IF WANTED
+    short bucket_size_x = cuConstRendererParams.imageWidth / dim_buckets;
+    short bucket_size_y = cuConstRendererParams.imageHeight / dim_buckets;
+    int num_buckets = dim_buckets * dim_buckets; // Square number of buckets
+
+    // Allocate mask array on CUDA device and set to zeros 
+    int* mask_ptr;
     cudaMalloc(&mask_ptr, sizeof(int) * num_buckets * numCircles);
-
-
+    cudaMemset(mask_ptr, 0, sizeof(int) * num_buckets * numCircles);
 
     dim3 gridDim(
         (image->width + blockDim.x - 1) / blockDim.x,
-        (image->height + blockDim.y - 1) / blockDim.y);
+        (image->height + blockDim.y - 1) / blockDim.y
+    );
+
+    // Launch kernelBucketCircles with grid and block dimensions
+    kernelBucketCircles<<<gridDim, blockDim>>>(mask_ptr, num_buckets, bucket_size_x, bucket_size_y);
+
+    // Ensure the kernel completes execution before proceeding
+    cudaDeviceSynchronize();
 
     kernelRenderCircles<<<gridDim, blockDim>>>();
+    
     cudaDeviceSynchronize();
 }
