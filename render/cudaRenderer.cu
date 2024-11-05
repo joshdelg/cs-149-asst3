@@ -385,7 +385,11 @@ shadePixel(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
 // The thread draws a bounding box, and assigns it to the quadrant
 // Where do I CUDA memcopy? 
 
-__global__ void kernelBucketCircles() {
+__global__ void kernelBucketCircles(int* mask_ptr, int num_buckets,short bucket_size_x, short bucket_size_y) {
+    // short imageWidth = cuConstRendererParams.imageWidth;
+    // short imageHeight = cuConstRendererParams.imageHeight;
+
+
     int index = blockIdx.x * blockDim.x + threadIdx.x;
     if (index >= cuConstRendererParams.numCircles)
         return;
@@ -411,10 +415,21 @@ __global__ void kernelBucketCircles() {
     short screenMinY = (minY > 0) ? ((minY < imageHeight) ? minY : imageHeight) : 0;
     short screenMaxY = (maxY > 0) ? ((maxY < imageHeight) ? maxY : imageHeight) : 0;
 
-    //logic to go through screenMinX, screenMaxX, screenMinY and screenMaxY
-    //asign it to one of the masks? 
-    //how do to do this? 
+    //coordinates: (screenMinX, screenMinY), (screenMinX, screenMaxY), (screenMaxX,screenMinY), (screenMaxX,screenMaxY)
+    
+    //take care of 
+    int bucket_xidx_min = screenMinX/ bucket_size_x;
+    int bucket_xidx_max = screenMaxX/ bucket_size_x;
+    int bucket_yidx_min = screenMinY/ bucket_size_y;
+    int bucket_yidx_max = screenMaxY/ bucket_size_y;
+
+    //set buckets, this ensures all the possible buckets are set 
+    mask_ptr[bucket_xidx_min][bucket_yidx_min][index] = 1
+    mask_ptr[bucket_xidx_min][bucket_yidx_max][index] = 1
+    mask_ptr[bucket_xidx_max][bucket_yidx_min][index] = 1
+    mask_ptr[bucket_xidx_max][bucket_yidx_max][index] = 1
 }
+
 // kernelRenderCircles -- (CUDA device code)
 //
 // Each thread renders a pixel. This should order and atomicity
@@ -679,6 +694,20 @@ CudaRenderer::render() {
 
     // 256 threads per block is a healthy number
     dim3 blockDim(16, 16, 1);
+
+    //num of blocks
+    //dim3 gridDim(4,4);
+    //(a+b-1)/(b) === ceil(a/b)
+
+    int num_buckets = 4; // MODIFY IF WANTED 
+    num_buckets = num_buckets * num_buckets //square 
+    //allocate mask arrays on cuda. Do we need to initialise to zero?
+    //cudaMalloc 
+    int* mask_ptr; 
+    cudaMalloc(&mask_ptr, sizeof(int) * num_buckets * numCircles);
+
+
+
     dim3 gridDim(
         (image->width + blockDim.x - 1) / blockDim.x,
         (image->height + blockDim.y - 1) / blockDim.y);
