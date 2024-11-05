@@ -385,7 +385,9 @@ shadePixel(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
 // The thread draws a bounding box, and assigns it to the quadrant
 // Where do I CUDA memcopy? 
 
-__global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets,short bucket_size_x, short bucket_size_y) {
+__global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets, short bucket_size_x, short bucket_size_y) {
+
+    int numCircles = cuConstRendererParams.numCircles;
 
 
     int index = blockIdx.x * blockDim.x + threadIdx.x;
@@ -421,67 +423,79 @@ __global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets,short bucket_
     int bucket_yidx_min = screenMinY/ bucket_size_y;
     int bucket_yidx_max = screenMaxY/ bucket_size_y;
 
-    // Clamp bucket indices to valid bucket bounds
-    bucket_xidx_min = max(0, min(bucket_xidx_min, dim_buckets - 1));
-    bucket_xidx_max = max(0, min(bucket_xidx_max, dim_buckets - 1));
-    bucket_yidx_min = max(0, min(bucket_yidx_min, dim_buckets - 1));
-    bucket_yidx_max = max(0, min(bucket_yidx_max, dim_buckets - 1));
+    // //set buckets, this ensures all the possible buckets are set 
+    // //flattened_index=bucket_xidx ×(num_buckets×num_circles)+bucket_yidx×num_circles+index
+    // mask_ptr[bucket_xidx_min * (dim_buckets * numCircles) + (bucket_yidx_min * numCircles) + index] = 1;
+    // mask_ptr[bucket_xidx_min * (dim_buckets * numCircles) + (bucket_yidx_max * numCircles) + index] = 1;
+    // mask_ptr[bucket_xidx_max * (dim_buckets * numCircles) + (bucket_yidx_min * numCircles) + index] = 1;
+    // mask_ptr[bucket_xidx_max * (dim_buckets * numCircles) + (bucket_yidx_max * numCircles) + index] = 1;
 
-    //set buckets, this ensures all the possible buckets are set 
-    //flattened_index=bucket_xidx ×(num_buckets×num_circles)+bucket_yidx×num_circles+index
-    mask_ptr[bucket_xidx_min * (dim_buckets * cuConstRendererParams.numCircles) + (bucket_yidx_min * cuConstRendererParams.numCircles) + index] = 1;
-    mask_ptr[bucket_xidx_min * (dim_buckets * cuConstRendererParams.numCircles) + (bucket_yidx_max * cuConstRendererParams.numCircles) + index] = 1;
-    mask_ptr[bucket_xidx_max * (dim_buckets * cuConstRendererParams.numCircles) + (bucket_yidx_min * cuConstRendererParams.numCircles) + index] = 1;
-    mask_ptr[bucket_xidx_max * (dim_buckets * cuConstRendererParams.numCircles) + (bucket_yidx_max * cuConstRendererParams.numCircles) + index] = 1;
-
+    for (int bx = bucket_xidx_min; bx <= bucket_xidx_max; bx++) {
+    for (int by = bucket_yidx_min; by <= bucket_yidx_max; by++) {
+        // Calculate the flattened index for the mask array
+        int bucket_index = bx * (dim_buckets * cuConstRendererParams.numCircles) + by * cuConstRendererParams.numCircles + index;
+        
+        // Set the mask to indicate this circle is in this bucket
+        mask_ptr[bucket_index] = 1;
+    }
+}
 }
 
 // kernelRenderCircles -- (CUDA device code)
 //
 // Each thread renders a pixel. This should order and atomicity
-__global__ void kernelRenderCircles() {
-    int xIndex = blockIdx.x * blockDim.x + threadIdx.x;
-    int yIndex = blockIdx.y * blockDim.y + threadIdx.y;
+__global__ void kernelRenderCircles(int* mask_ptr, int dim_buckets, short bucket_size_x, short bucket_size_y) {
 
     short imageWidth = cuConstRendererParams.imageWidth;
     short imageHeight = cuConstRendererParams.imageHeight;
     int numCircles = cuConstRendererParams.numCircles;
 
+    int xIndex = blockIdx.x * blockDim.x + threadIdx.x;
+    int yIndex = blockIdx.y * blockDim.y + threadIdx.y;
+
+    // Divide the screen into the same grid of buckets you used in kernelBucketCircles
+    int pixelBucketX = xIndex / bucket_size_x;
+    int pixelBucketY = yIndex / bucket_size_y;
+
+    // Find the circles in the Pixels Bucket 
+    int startIndex = pixelBucketX * (dim_buckets * cuConstRendererParams.numCircles) + pixelBucketY * numCircles;
+
     if (xIndex >= imageWidth || yIndex >= imageHeight)
         return;
     
     for(int index = 0; index < numCircles; index++) {
-        int index3 = 3 * index;
+        if (mask_ptr[startIndex + index] == 1) {
+            int index3 = 3 * index;
+            // read position and radius
+            float3 p = *(float3*)(&cuConstRendererParams.position[index3]);
+            float  rad = cuConstRendererParams.radius[index];
 
-        // read position and radius
-        float3 p = *(float3*)(&cuConstRendererParams.position[index3]);
-        float  rad = cuConstRendererParams.radius[index];
+            // compute the bounding box of the circle. The bound is in integer
+            // screen coordinates, so it's clamped to the edges of the screen.
+            short minX = static_cast<short>(imageWidth * (p.x - rad));
+            short maxX = static_cast<short>(imageWidth * (p.x + rad)) + 1;
+            short minY = static_cast<short>(imageHeight * (p.y - rad));
+            short maxY = static_cast<short>(imageHeight * (p.y + rad)) + 1;
 
-        // compute the bounding box of the circle. The bound is in integer
-        // screen coordinates, so it's clamped to the edges of the screen.
-        short minX = static_cast<short>(imageWidth * (p.x - rad));
-        short maxX = static_cast<short>(imageWidth * (p.x + rad)) + 1;
-        short minY = static_cast<short>(imageHeight * (p.y - rad));
-        short maxY = static_cast<short>(imageHeight * (p.y + rad)) + 1;
+            // a bunch of clamps.  Is there a CUDA built-in for this?
+            short screenMinX = (minX > 0) ? ((minX < imageWidth) ? minX : imageWidth) : 0;
+            short screenMaxX = (maxX > 0) ? ((maxX < imageWidth) ? maxX : imageWidth) : 0;
+            short screenMinY = (minY > 0) ? ((minY < imageHeight) ? minY : imageHeight) : 0;
+            short screenMaxY = (maxY > 0) ? ((maxY < imageHeight) ? maxY : imageHeight) : 0;
 
-        // a bunch of clamps.  Is there a CUDA built-in for this?
-        short screenMinX = (minX > 0) ? ((minX < imageWidth) ? minX : imageWidth) : 0;
-        short screenMaxX = (maxX > 0) ? ((maxX < imageWidth) ? maxX : imageWidth) : 0;
-        short screenMinY = (minY > 0) ? ((minY < imageHeight) ? minY : imageHeight) : 0;
-        short screenMaxY = (maxY > 0) ? ((maxY < imageHeight) ? maxY : imageHeight) : 0;
+            // Check if pixel is in circles bounding box
+            if(screenMinX <= xIndex && xIndex <= screenMaxX && screenMinY <= yIndex && yIndex <= screenMaxY) {
+                // Check if actual intersect the circle
+                float invWidth = 1.f / imageWidth;
+                float invHeight = 1.f / imageHeight;
 
-        // Check if pixel is in circles bounding box
-        if(screenMinX <= xIndex && xIndex <= screenMaxX && screenMinY <= yIndex && yIndex <= screenMaxY) {
-            // Check if actual intersect the circle
-            float invWidth = 1.f / imageWidth;
-            float invHeight = 1.f / imageHeight;
+                float2 pixelCenterNorm = make_float2(invWidth * (static_cast<float>(xIndex) + 0.5f),
+                                                invHeight * (static_cast<float>(yIndex) + 0.5f));
 
-            float2 pixelCenterNorm = make_float2(invWidth * (static_cast<float>(xIndex) + 0.5f),
-                                            invHeight * (static_cast<float>(yIndex) + 0.5f));
-
-            float4* imgPtr = (float4*)(&cuConstRendererParams.imageData[4 * (yIndex * imageWidth + xIndex)]);
-            
-            shadePixel(index, pixelCenterNorm, p, imgPtr);
+                float4* imgPtr = (float4*)(&cuConstRendererParams.imageData[4 * (yIndex * imageWidth + xIndex)]);
+                
+                shadePixel(index, pixelCenterNorm, p, imgPtr);
+            }
         }
     }
 }
@@ -709,7 +723,7 @@ CudaRenderer::render() {
     //dim3 gridDim(4,4);
 
     // Define the number of buckets and bucket sizes
-    int dim_buckets = 4; // MODIFY IF WANTED
+    int dim_buckets = 8; // MODIFY IF WANTED
     short bucket_size_x = (imageWidth + dim_buckets - 1) / dim_buckets;
     short bucket_size_y = (imageHeight + dim_buckets - 1) / dim_buckets;
 
@@ -731,7 +745,26 @@ CudaRenderer::render() {
     // Ensure the kernel completes execution before proceeding
     cudaDeviceSynchronize();
 
-    kernelRenderCircles<<<gridDim, blockDim>>>();
+        // Allocate host memory for copying mask_ptr back
+    int* host_mask_ptr = new int[num_buckets * numCircles];
+
+    // Copy mask_ptr from device to host
+    cudaMemcpy(host_mask_ptr, mask_ptr, sizeof(int) * num_buckets * numCircles, cudaMemcpyDeviceToHost);
+
+    // Print the contents of mask_ptr for debugging
+    printf("Contents of mask_ptr:\n");
+    for (int i = 0; i < num_buckets; i++) {
+        printf("Bucket %d: ", i);
+        for (int j = 0; j < numCircles; j++) {
+            if (host_mask_ptr[i * numCircles + j] == 1) { // Only print if a circle is present
+                printf("Circle %d ", j);
+            }
+        }
+        printf("\n");
+    }
+
+
+    kernelRenderCircles<<<gridDim, blockDim>>>(mask_ptr, dim_buckets, bucket_size_x, bucket_size_y);
 
     cudaDeviceSynchronize();
 }
