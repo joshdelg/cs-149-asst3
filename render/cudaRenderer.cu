@@ -421,11 +421,20 @@ __global__ void kernelBucketCircles(int* mask_ptr, int num_buckets,short bucket_
     int bucket_yidx_min = screenMinY/ bucket_size_y;
     int bucket_yidx_max = screenMaxY/ bucket_size_y;
 
+    // //set buckets, this ensures all the possible buckets are set 
+    // mask_ptr[bucket_xidx_min][bucket_yidx_min][index] = 1;
+    // mask_ptr[bucket_xidx_min][bucket_yidx_max][index] = 1;
+    // mask_ptr[bucket_xidx_max][bucket_yidx_min][index] = 1;
+    // mask_ptr[bucket_xidx_max][bucket_yidx_max][index] = 1;
+
+    //!!!! SOME CHATGPTED CODE, COULD HAVE BUGS
     //set buckets, this ensures all the possible buckets are set 
-    mask_ptr[bucket_xidx_min][bucket_yidx_min][index] = 1
-    mask_ptr[bucket_xidx_min][bucket_yidx_max][index] = 1
-    mask_ptr[bucket_xidx_max][bucket_yidx_min][index] = 1
-    mask_ptr[bucket_xidx_max][bucket_yidx_max][index] = 1
+    // Set buckets
+    mask_ptr[bucket_xidx_min * dim_buckets * numCircles + bucket_yidx_min * numCircles + index] = 1;
+    mask_ptr[bucket_xidx_min * dim_buckets * numCircles + bucket_yidx_max * numCircles + index] = 1;
+    mask_ptr[bucket_xidx_max * dim_buckets * numCircles + bucket_yidx_min * numCircles + index] = 1;
+    mask_ptr[bucket_xidx_max * dim_buckets * numCircles + bucket_yidx_max * numCircles + index] = 1;
+
 }
 
 // kernelRenderCircles -- (CUDA device code)
@@ -721,6 +730,6 @@ CudaRenderer::render() {
     cudaDeviceSynchronize();
 
     kernelRenderCircles<<<gridDim, blockDim>>>();
-    
+
     cudaDeviceSynchronize();
 }
