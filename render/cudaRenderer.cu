@@ -385,7 +385,7 @@ shadePixel(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
 // The thread draws a bounding box, and assigns it to the quadrant
 // Where do I CUDA memcopy? 
 
-__global__ void kernelBucketCircles(int* mask_ptr, int num_buckets,short bucket_size_x, short bucket_size_y) {
+__global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets,short bucket_size_x, short bucket_size_y) {
 
 
     int index = blockIdx.x * blockDim.x + threadIdx.x;
@@ -421,19 +421,18 @@ __global__ void kernelBucketCircles(int* mask_ptr, int num_buckets,short bucket_
     int bucket_yidx_min = screenMinY/ bucket_size_y;
     int bucket_yidx_max = screenMaxY/ bucket_size_y;
 
-    // //set buckets, this ensures all the possible buckets are set 
-    // mask_ptr[bucket_xidx_min][bucket_yidx_min][index] = 1;
-    // mask_ptr[bucket_xidx_min][bucket_yidx_max][index] = 1;
-    // mask_ptr[bucket_xidx_max][bucket_yidx_min][index] = 1;
-    // mask_ptr[bucket_xidx_max][bucket_yidx_max][index] = 1;
+    // Clamp bucket indices to valid bucket bounds
+    bucket_xidx_min = max(0, min(bucket_xidx_min, dim_buckets - 1));
+    bucket_xidx_max = max(0, min(bucket_xidx_max, dim_buckets - 1));
+    bucket_yidx_min = max(0, min(bucket_yidx_min, dim_buckets - 1));
+    bucket_yidx_max = max(0, min(bucket_yidx_max, dim_buckets - 1));
 
-    //!!!! SOME CHATGPTED CODE, COULD HAVE BUGS
     //set buckets, this ensures all the possible buckets are set 
-    // Set buckets
-    mask_ptr[bucket_xidx_min * dim_buckets * numCircles + bucket_yidx_min * numCircles + index] = 1;
-    mask_ptr[bucket_xidx_min * dim_buckets * numCircles + bucket_yidx_max * numCircles + index] = 1;
-    mask_ptr[bucket_xidx_max * dim_buckets * numCircles + bucket_yidx_min * numCircles + index] = 1;
-    mask_ptr[bucket_xidx_max * dim_buckets * numCircles + bucket_yidx_max * numCircles + index] = 1;
+    //flattened_index=bucket_xidx ×(num_buckets×num_circles)+bucket_yidx×num_circles+index
+    mask_ptr[bucket_xidx_min * (dim_buckets * cuConstRendererParams.numCircles) + (bucket_yidx_min * cuConstRendererParams.numCircles) + index] = 1;
+    mask_ptr[bucket_xidx_min * (dim_buckets * cuConstRendererParams.numCircles) + (bucket_yidx_max * cuConstRendererParams.numCircles) + index] = 1;
+    mask_ptr[bucket_xidx_max * (dim_buckets * cuConstRendererParams.numCircles) + (bucket_yidx_min * cuConstRendererParams.numCircles) + index] = 1;
+    mask_ptr[bucket_xidx_max * (dim_buckets * cuConstRendererParams.numCircles) + (bucket_yidx_max * cuConstRendererParams.numCircles) + index] = 1;
 
 }
 
@@ -699,18 +698,21 @@ CudaRenderer::advanceAnimation() {
 void
 CudaRenderer::render() {
 
+    // Get image dimensions from the host-side `Image` object
+    int imageWidth = image->width;
+    int imageHeight = image->height;
+
     // 256 threads per block is a healthy number
     dim3 blockDim(16, 16, 1);
 
     //num of blocks
     //dim3 gridDim(4,4);
-    //(a+b-1)/(b) === ceil(a/b)
-
 
     // Define the number of buckets and bucket sizes
     int dim_buckets = 4; // MODIFY IF WANTED
-    short bucket_size_x = cuConstRendererParams.imageWidth / dim_buckets;
-    short bucket_size_y = cuConstRendererParams.imageHeight / dim_buckets;
+    short bucket_size_x = (imageWidth + dim_buckets - 1) / dim_buckets;
+    short bucket_size_y = (imageHeight + dim_buckets - 1) / dim_buckets;
+
     int num_buckets = dim_buckets * dim_buckets; // Square number of buckets
 
     // Allocate mask array on CUDA device and set to zeros 
@@ -719,12 +721,12 @@ CudaRenderer::render() {
     cudaMemset(mask_ptr, 0, sizeof(int) * num_buckets * numCircles);
 
     dim3 gridDim(
-        (image->width + blockDim.x - 1) / blockDim.x,
-        (image->height + blockDim.y - 1) / blockDim.y
+        (imageWidth + blockDim.x - 1) / blockDim.x,
+        (imageHeight + blockDim.y - 1) / blockDim.y
     );
 
     // Launch kernelBucketCircles with grid and block dimensions
-    kernelBucketCircles<<<gridDim, blockDim>>>(mask_ptr, num_buckets, bucket_size_x, bucket_size_y);
+    kernelBucketCircles<<<gridDim, blockDim>>>(mask_ptr, dim_buckets, bucket_size_x, bucket_size_y);
 
     // Ensure the kernel completes execution before proceeding
     cudaDeviceSynchronize();
