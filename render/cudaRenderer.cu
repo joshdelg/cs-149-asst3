@@ -386,7 +386,6 @@ shadePixel(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
 // Where do I CUDA memcopy? 
 
 __global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets, short bucket_size_x, short bucket_size_y) {
-
     int numCircles = cuConstRendererParams.numCircles;
 
 
@@ -395,6 +394,7 @@ __global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets, short bucket
         return;
 
     int index3 = 3 * index;
+    // printf("I'm calculating for cricle %d\n", index);
 
     // read position and radius
     float3 p = *(float3*)(&cuConstRendererParams.position[index3]);
@@ -416,7 +416,11 @@ __global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets, short bucket
     short screenMaxY = (maxY > 0) ? ((maxY < imageHeight) ? maxY : imageHeight) : 0;
 
     //coordinates: (screenMinX, screenMinY), (screenMinX, screenMaxY), (screenMaxX,screenMinY), (screenMaxX,screenMaxY)
-    
+    // if(
+    //     screenMinX < 0 || screenMinX > imageWidth ||
+    //     screenMinX < 0 || screenMinX > imageWidth ||
+    // )
+
     //assign buckets, for all the coordinates 
     int bucket_xidx_min = screenMinX/ bucket_size_x;
     int bucket_xidx_max = screenMaxX/ bucket_size_x;
@@ -434,8 +438,8 @@ __global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets, short bucket
     for (int bx = bucket_xidx_min; bx <= bucket_xidx_max; bx++) {
         for (int by = bucket_yidx_min; by <= bucket_yidx_max; by++) {
             // Calculate the flattened index for the mask array
-            int bucket_index = bx * (dim_buckets * numCircles) + by * cuConstRendererParams.numCircles + index;
-            
+            int bucket_index = bx * (dim_buckets * numCircles) + by * numCircles + index;
+            printf("Adding circle %d with bounding box  x:(%d, %d) y:(%d, %d) to bucket location (%d, %d)\n", index, screenMinX, screenMaxX, screenMinY, screenMaxY, bx, by);
             // Set the mask to indicate this circle is in this bucket
             mask_ptr[bucket_index] = 1;
         }
@@ -573,8 +577,6 @@ CudaRenderer::setup() {
 
     printf("---------------------------------------------------------\n");
     printf("Initializing CUDA for CudaRenderer\n");
-
-    printf("Hello,w orld!\n");
 
     printf("Found %d CUDA devices\n", deviceCount);
 
