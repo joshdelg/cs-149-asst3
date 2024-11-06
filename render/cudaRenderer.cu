@@ -724,7 +724,7 @@ CudaRenderer::render() {
     //dim3 gridDim(4,4);
 
     // Define the number of buckets and bucket sizes
-    int dim_buckets = 4; // MODIFY IF WANTED
+    int dim_buckets = 7; // MODIFY IF WANTED
     short bucket_size_x = (imageWidth + dim_buckets - 1) / dim_buckets;
     short bucket_size_y = (imageHeight + dim_buckets - 1) / dim_buckets;
 
