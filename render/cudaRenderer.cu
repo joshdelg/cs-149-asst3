@@ -432,13 +432,13 @@ __global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets, short bucket
 
     //need a for loop, as circles can span many boxes!!!
     for (int bx = bucket_xidx_min; bx <= bucket_xidx_max; bx++) {
-    for (int by = bucket_yidx_min; by <= bucket_yidx_max; by++) {
-        // Calculate the flattened index for the mask array
-        int bucket_index = bx * (dim_buckets * numCircles) + by * cuConstRendererParams.numCircles + index;
-        
-        // Set the mask to indicate this circle is in this bucket
-        mask_ptr[bucket_index] = 1;
-    }
+        for (int by = bucket_yidx_min; by <= bucket_yidx_max; by++) {
+            // Calculate the flattened index for the mask array
+            int bucket_index = bx * (dim_buckets * numCircles) + by * cuConstRendererParams.numCircles + index;
+            
+            // Set the mask to indicate this circle is in this bucket
+            mask_ptr[bucket_index] = 1;
+        }
 }
 }
 
@@ -724,7 +724,7 @@ CudaRenderer::render() {
     //dim3 gridDim(4,4);
 
     // Define the number of buckets and bucket sizes
-    int dim_buckets = 3; // MODIFY IF WANTED
+    int dim_buckets = 4; // MODIFY IF WANTED
     short bucket_size_x = (imageWidth + dim_buckets - 1) / dim_buckets;
     short bucket_size_y = (imageHeight + dim_buckets - 1) / dim_buckets;
 
@@ -740,11 +740,15 @@ CudaRenderer::render() {
         (imageHeight + blockDim.y - 1) / blockDim.y
     );
 
-    // Launch kernelBucketCircles with grid and block dimensions
-    kernelBucketCircles<<<gridDim, blockDim>>>(mask_ptr, dim_buckets, bucket_size_x, bucket_size_y);
+        // Define block and grid dimensions for `kernelBucketCircles`
+    int blockSize = 256; // Number of threads per block
+    dim3 blockDimBucket(blockSize, 1, 1);
+    dim3 gridDimBucket((numCircles + blockSize - 1) / blockSize);
 
-    // Ensure the kernel completes execution before proceeding
+    // Launch kernelBucketCircles with grid and block dimensions for circles
+    kernelBucketCircles<<<gridDimBucket, blockDimBucket>>>(mask_ptr, dim_buckets, bucket_size_x, bucket_size_y);
     cudaDeviceSynchronize();
+
 
         // Allocate host memory for copying mask_ptr back
     int* host_mask_ptr = new int[num_buckets * numCircles];
