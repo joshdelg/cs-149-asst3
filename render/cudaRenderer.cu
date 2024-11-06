@@ -430,10 +430,11 @@ __global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets, short bucket
     // mask_ptr[bucket_xidx_max * (dim_buckets * numCircles) + (bucket_yidx_min * numCircles) + index] = 1;
     // mask_ptr[bucket_xidx_max * (dim_buckets * numCircles) + (bucket_yidx_max * numCircles) + index] = 1;
 
+    //need a for loop, as circles can span many boxes!!!
     for (int bx = bucket_xidx_min; bx <= bucket_xidx_max; bx++) {
     for (int by = bucket_yidx_min; by <= bucket_yidx_max; by++) {
         // Calculate the flattened index for the mask array
-        int bucket_index = bx * (dim_buckets * cuConstRendererParams.numCircles) + by * cuConstRendererParams.numCircles + index;
+        int bucket_index = bx * (dim_buckets * numCircles) + by * cuConstRendererParams.numCircles + index;
         
         // Set the mask to indicate this circle is in this bucket
         mask_ptr[bucket_index] = 1;
@@ -723,7 +724,7 @@ CudaRenderer::render() {
     //dim3 gridDim(4,4);
 
     // Define the number of buckets and bucket sizes
-    int dim_buckets = 8; // MODIFY IF WANTED
+    int dim_buckets = 3; // MODIFY IF WANTED
     short bucket_size_x = (imageWidth + dim_buckets - 1) / dim_buckets;
     short bucket_size_y = (imageHeight + dim_buckets - 1) / dim_buckets;
 
@@ -748,20 +749,20 @@ CudaRenderer::render() {
         // Allocate host memory for copying mask_ptr back
     int* host_mask_ptr = new int[num_buckets * numCircles];
 
-    // Copy mask_ptr from device to host
-    cudaMemcpy(host_mask_ptr, mask_ptr, sizeof(int) * num_buckets * numCircles, cudaMemcpyDeviceToHost);
+    // // Copy mask_ptr from device to host
+    // cudaMemcpy(host_mask_ptr, mask_ptr, sizeof(int) * num_buckets * numCircles, cudaMemcpyDeviceToHost);
 
-    // Print the contents of mask_ptr for debugging
-    printf("Contents of mask_ptr:\n");
-    for (int i = 0; i < num_buckets; i++) {
-        printf("Bucket %d: ", i);
-        for (int j = 0; j < numCircles; j++) {
-            if (host_mask_ptr[i * numCircles + j] == 1) { // Only print if a circle is present
-                printf("Circle %d ", j);
-            }
-        }
-        printf("\n");
-    }
+    // // Print the contents of mask_ptr for debugging
+    // printf("Contents of mask_ptr:\n");
+    // for (int i = 0; i < num_buckets; i++) {
+    //     printf("Bucket %d: ", i);
+    //     for (int j = 0; j < numCircles; j++) {
+    //         if (host_mask_ptr[i * numCircles + j] == 1) { // Only print if a circle is present
+    //             printf("Circle %d ", j);
+    //         }
+    //     }
+    //     printf("\n");
+    // }
 
 
     kernelRenderCircles<<<gridDim, blockDim>>>(mask_ptr, dim_buckets, bucket_size_x, bucket_size_y);
