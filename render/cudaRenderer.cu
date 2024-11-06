@@ -322,16 +322,19 @@ shadePixel(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
 
     float diffX = p.x - pixelCenter.x;
     float diffY = p.y - pixelCenter.y;
+    //logic to calculate bounding box, and outside in box, then return 
+    //else do furtehr calculation 
     float pixelDist = diffX * diffX + diffY * diffY;
 
     float rad = cuConstRendererParams.radius[circleIndex];;
+    //can you store the square of the radius so you don't need to compute everytime 
     float maxDist = rad * rad;
 
     // circle does not contribute to the image
     if (pixelDist > maxDist)
         return;
 
-    float3 rgb;
+    float3 rgb; //idk what this is 
     float alpha;
 
     // there is a non-zero contribution.  Now compute the shading value
@@ -389,8 +392,9 @@ __global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets, short bucket
 
     int numCircles = cuConstRendererParams.numCircles;
 
-
+    //TODO for Ishita: Understand 1D indexing 
     int index = blockIdx.x * blockDim.x + threadIdx.x;
+
     if (index >= cuConstRendererParams.numCircles)
         return;
 
@@ -716,6 +720,8 @@ CudaRenderer::render() {
     // Get image dimensions from the host-side `Image` object
     int imageWidth = image->width;
     int imageHeight = image->height;
+    printf("Image Width = %d\n", imageWidth);
+    printf("Image Height = %d\n", imageHeight);
 
     // 256 threads per block is a healthy number
     dim3 blockDim(16, 16, 1);
@@ -724,9 +730,11 @@ CudaRenderer::render() {
     //dim3 gridDim(4,4);
 
     // Define the number of buckets and bucket sizes
-    int dim_buckets = 7; // MODIFY IF WANTED
-    short bucket_size_x = (imageWidth + dim_buckets - 1) / dim_buckets;
-    short bucket_size_y = (imageHeight + dim_buckets - 1) / dim_buckets;
+    int dim_buckets = 5; // MODIFY IF WANTED
+
+    short bucket_size_x = ((imageWidth + dim_buckets - 1) / dim_buckets) + 1;
+    //printf("")
+    short bucket_size_y = ((imageHeight + dim_buckets - 1)) / dim_buckets + 1;
 
     int num_buckets = dim_buckets * dim_buckets; // Square number of buckets
 
@@ -740,7 +748,7 @@ CudaRenderer::render() {
         (imageHeight + blockDim.y - 1) / blockDim.y
     );
 
-        // Define block and grid dimensions for `kernelBucketCircles`
+    // Define block and grid dimensions for `kernelBucketCircles`
     int blockSize = 256; // Number of threads per block
     dim3 blockDimBucket(blockSize, 1, 1);
     dim3 gridDimBucket((numCircles + blockSize - 1) / blockSize);
