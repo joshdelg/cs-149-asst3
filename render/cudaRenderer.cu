@@ -14,6 +14,7 @@
 #include "sceneLoader.h"
 #include "util.h"
 
+#define THREADS_PER_BLOCK 256
 ////////////////////////////////////////////////////////////////////////////////////////
 // Putting all the cuda kernels here
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -382,6 +383,159 @@ shadePixel(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
     // END SHOULD-BE-ATOMIC REGION
 }
 
+// helper function to round an integer up to the next power of 2
+static inline int nextPow2(int n) {
+    n--;
+    n |= n >> 1;
+    n |= n >> 2;
+    n |= n >> 4;
+    n |= n >> 8;
+    n |= n >> 16;
+    n++;
+    return n;
+}
+
+__global__ void cudaUpsweep(long long N, long long two_d, long long two_dplus_1, int* data, long long roundedN) {
+    long long idx = blockIdx.x * blockDim.x + threadIdx.x; // Thread index
+    long long i = idx * two_dplus_1; // Actual element index
+
+    if(i + two_dplus_1 - 1 >= roundedN) return;
+
+    data[i + two_dplus_1 - 1] += data[i + two_d - 1];
+}
+
+__global__ void cudaDownsweep(long long N, long long two_d, long long two_dplus_1, int* data, long long pow2N) {
+    long long idx = blockIdx.x * blockDim.x + threadIdx.x; // Thread index
+    long long i = idx * two_dplus_1; // Actual element index
+
+    if(i + two_dplus_1 - 1 >= pow2N) return;
+
+    int t = data[i + two_d - 1];
+    data[i + two_d - 1] = data[i + two_dplus_1 - 1];
+    data[i + two_dplus_1 - 1] += t;
+}
+
+__global__ void cudaMiddleStep(int* data, long long pow2N) {
+    if(blockIdx.x * blockDim.x + threadIdx.x == 0) {
+        data[pow2N - 1] = 0;
+    }
+}
+
+// exclusive_scan --
+//
+// Implementation of an exclusive scan on global memory array `input`,
+// with results placed in global memory `result`.
+//
+// N is the logical size of the input and output arrays, however
+// students can assume that both the start and result arrays we
+// allocated with next power-of-two sizes as described by the comments
+// in cudaScan().  This is helpful, since your parallel scan
+// will likely write to memory locations beyond N, but of course not
+// greater than N rounded up to the next power of 2.
+//
+// Also, as per the comments in cudaScan(), you can implement an
+// "in-place" scan, since the timing harness makes a copy of input and
+// places it in result
+
+//FIND ME EXCLUSIVE
+void exclusive_scan(int* input, int N, int* result)
+{
+
+    // CS149 TODO:
+    //
+    // Implement your exclusive scan implementation here.  Keep in
+    // mind that although the arguments to this function are device
+    // allocated arrays, this is a function that is running in a thread
+    // on the CPU.  Your implementation will need to make multiple calls
+    // to CUDA kernel functions (that you must write) to implement the
+    // scan.
+
+    // Upsweep
+    long long roundedN = nextPow2(N);
+
+    for(int two_d = 1; two_d <= roundedN / 2; two_d *= 2) {
+	    int two_dplus1 = 2 * two_d;
+
+        int ops = roundedN / two_dplus1;
+        int numBlocks = (ops + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+
+	    cudaUpsweep<<<numBlocks, THREADS_PER_BLOCK>>>(N, two_d, two_dplus1, result, roundedN);
+        cudaDeviceSynchronize();
+    }
+
+    cudaMiddleStep<<<1, THREADS_PER_BLOCK>>>(result, roundedN);
+    cudaDeviceSynchronize();
+
+    // Downsweep
+    for(int two_d = roundedN / 2; two_d >= 1; two_d /= 2) {
+	    int two_dplus1 = 2 * two_d;
+        
+        int ops = roundedN / two_dplus1;
+        int numBlocks = (ops + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+
+        cudaDownsweep<<<numBlocks, THREADS_PER_BLOCK>>>(N, two_d, two_dplus1, result, roundedN);
+        cudaDeviceSynchronize();
+    }
+}
+
+//FIND ME REPEATS
+__global__ void cuda_identify_transition_points(int* prefix_sum_array, int* result, int length) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x; // Unique thread index
+
+    if (idx >= length - 1) return; // Ensure we stay within bounds for idx + 1
+
+    // Check if we have a transition point
+    if (prefix_sum_array[idx + 1] != prefix_sum_array[idx] + 1) {
+        result[prefix_sum_array[idx]] = idx;
+    }
+}
+
+
+// find_repeats --
+//
+// Given an array of integers `device_input`, returns an array of all
+// indices `i` for which `device_input[i] == device_input[i+1]`.
+//
+// Returns the total number of pairs found
+int find_not_repeats(int* device_input, int length, int* device_output, int *positions_mask) {
+
+    // CS149 TODO:
+    //
+    // Implement this function. You will probably want to
+    // make use of one or more calls to exclusive_scan(), as well as
+    // additional CUDA kernel launches.
+    //    
+    // Note: As in the scan code, the calling code ensures that
+    // allocated arrays are a power of 2 in size, so you can use your
+    // exclusive_scan function with them. However, your implementation
+    // must ensure that the results of find_repeats are correct given
+    // the actual array length.
+
+    // Step 1: For each Bucket, call Exclusive Sum. Sync. 
+    // Step 2: Go though each excluive_scan[num_buckets] to find the max. Non paralell 
+    // Step 3: allocate array of size max * num_buckets. Memset it to -1 
+    // Step 4: check not_equal on each item in the exclusive scan for each bucket, store into the array made in step 3 
+
+    int numBlocks = (length + THREADS_PER_BLOCK - 1) / THREADS_PER_BLOCK;
+    pair_and_compare<<<numBlocks, THREADS_PER_BLOCK>>>(device_input, positions_mask, length);
+    cudaDeviceSynchronize();
+
+    // Step 2: Perform an exclusive scan on positions_mask (keeping it on the GPU)
+    exclusive_scan(positions_mask, length, positions_mask); // Result remains in positions_mask
+    // cudaDeviceSynchronize(); //do we need this? 
+
+    // Step 3: Copy the last element of positions_mask to the CPU to get the count of repeats
+    int result;
+    cudaMemcpy(&result, &positions_mask[length - 1], sizeof(int), cudaMemcpyDeviceToHost);
+    //possible need to synchronise? 
+
+    // Step 4: Identify transition points using cuda_identify_transition_points
+    cuda_identify_transition_points<<<numBlocks, THREADS_PER_BLOCK>>>(positions_mask, device_output, length);
+    cudaDeviceSynchronize();
+
+    return result; 
+}
+
 //
 // Each thread processes a circle. 
 // There are 4 arrays, one for each quadrant 
@@ -472,8 +626,8 @@ __global__ void kernelRenderCircles(int* mask_ptr, int dim_buckets, short bucket
     if (xIndex >= imageWidth || yIndex >= imageHeight)
         return;
     
-    for(int index = 0; index < numCircles; index++) {
-        if (mask_ptr[startIndex + index] == 1) {
+    for(int index = 0; index < numCircles; index++) { //range max
+        if (mask_ptr[startIndex + index] == 1) { //check each of our indexes 
             int index3 = 3 * index;
             // read position and radius
             float3 p = *(float3*)(&cuConstRendererParams.position[index3]);
@@ -757,6 +911,36 @@ CudaRenderer::render() {
 
     // Launch kernelBucketCircles with grid and block dimensions for circles
     kernelBucketCircles<<<gridDimBucket, blockDimBucket>>>(mask_ptr, dim_buckets, bucket_size_x, bucket_size_y);
+    cudaDeviceSynchronize();
+
+    //FIND ME
+    //Mask Ptr is now populated 
+    // Step 1: For each Bucket, call Exclusive Sum. Sync. Pass in copies of pointer because its gonna currput the data otherwise 
+    prefix_sum_result_ptr = cuudamalloc(size = (numCircles + 1) * num_buckets)
+    for (i in range numbuckets){
+        bucket_start_ptr = mask_ptr + numCircles * i 
+        result_start_ptr = prefix_sum_result_ptr + (numCircles + 1)*i
+        excluive_scan(bucket_start_ptr,numCircles, result_start_ptr )
+    }
+    cudaDeviceSynchronize();
+
+    // Step 2: Go though each excluive_scan[num_buckets] to find the max. Non paralell 
+    bucket_num_circles[num_buckets]; 
+    for (i in range num_buckets){
+        bucket_num_circles[i] = prefix_sum_result_ptr[num_circles]
+    }
+
+    // Step 3: allocate array of size max * num_buckets. Memset it to -1 
+    max = max(bucket_num_circles)
+    not_equal_result_ptr = cudamalloc(max * num_buckets)
+    cudamemset(-1)
+
+    // Step 4: check not_equal on each item in the exclusive scan for each bucket, store into the array made in step 3 
+    for (i in range num_buckets){
+        prefix_sum_ptr = prefix_sum_result_ptr + i (num_circles + 1)
+        result_ptr = not_equal_result_ptr + max * i; 
+        cuda_identify_transition_points(prefix_sum_ptr, result_ptr, num_circles + 1 ) //is it correct to do num_circles + 1?
+    }
     cudaDeviceSynchronize();
 
 
