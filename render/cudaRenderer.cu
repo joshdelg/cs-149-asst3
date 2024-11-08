@@ -531,10 +531,15 @@ __global__ void kernelRenderCirclesFast() {
     int screenMinY = (minY > 0) ? ((minY < imageHeight) ? minY : imageHeight) : 0;
     int screenMaxY = (maxY > 0) ? ((maxY < imageHeight) ? maxY : imageHeight) : 0;
 
+    float normMinX = screenMinX / (float) imageWidth;
+    float normMaxX = screenMaxX / (float) imageWidth;
+    float normMinY = screenMinY / (float) imageHeight;
+    float normMaxY = screenMaxY / (float) imageHeight;
+
     int pixelX = screenMinX + threadIdx.x;
     int pixelY = screenMinY + threadIdx.y;
 
-    if(threadIdx.x == 0 && threadIdx.y == 0) printf("SCreen box (%d, %d) (%d, %d) pixel (%d %d) \n", screenMinX, screenMinY, screenMaxX, screenMaxY, pixelX, pixelY);
+    // if(threadIdx.x == 0 && threadIdx.y == 0) printf("SCreen box (%d, %d) (%d, %d) pixel (%d %d) \n", screenMinX, screenMinY, screenMaxX, screenMaxY, pixelX, pixelY);
 
     __shared__ uint prefixSumInput[THREADS_PER_BLOCK]; // Will become our bitmap array
     __shared__ uint prefixSumOutput[THREADS_PER_BLOCK]; // Will become our index mapping
@@ -553,25 +558,42 @@ __global__ void kernelRenderCirclesFast() {
             float  rad = cuConstRendererParams.radius[threadCircle];
 
             // Check if in bounding box
-            prefixSumInput[linearThreadIndex] = circleInBoxConservative(p.x, p.y, rad, screenMinX, screenMaxX, screenMaxY, screenMinY) && circleInBox(p.x, p.y, rad, screenMinX, screenMaxX, screenMaxY, screenMinY);
+            if(circleInBoxConservative(p.x, p.y, rad, normMinX, normMaxX, normMaxY, normMinY) && circleInBox(p.x, p.y, rad, normMinX, normMaxX, normMaxY, normMinY)) {
+                prefixSumInput[linearThreadIndex] = 1;
+                // is inside the chunk with box (%d, %d) (%d, %d)
+            } else {
+                prefixSumInput[linearThreadIndex] = 0;
+            }
+            
         } else {
             prefixSumInput[linearThreadIndex] = 0;
         }
 
-        // if(threadIdx.x == 0 && threadIdx.y == 0) printf("Made it before first sync threads in \n");
         __syncthreads();
+        if(linearThreadIndex == 0) {
+            printf("Block index (%d, %d) Bit array = [%d, %d, %d, %d, %d]\n", blockIdx.x, blockIdx.y, prefixSumInput[0], prefixSumInput[1], prefixSumInput[2], prefixSumInput[3], prefixSumInput[4]);
+        }
         // if(threadIdx.x == 0 && threadIdx.y == 0) printf("Made it after first sync threads\n");
 
         // Compute prefix sum to make indices mapping
         sharedMemExclusiveScan(linearThreadIndex, prefixSumInput, prefixSumOutput, prefixSumScratch, THREADS_PER_BLOCK);
         __syncthreads();
+        if(linearThreadIndex == 0 ) {
+            printf("Block index (%d, %d) Prefix sun array = [%d, %d, %d, %d, %d]\n", blockIdx.x, blockIdx.y, prefixSumOutput[0], prefixSumOutput[1], prefixSumOutput[2], prefixSumOutput[3], prefixSumOutput[4]);
+        }
 
         // Create dense array of circles to process using bitmap and indices map (return length to not iterate too far)
         if(prefixSumInput[linearThreadIndex]) circlesInChunk[prefixSumOutput[linearThreadIndex]] = threadCircle;
         __syncthreads();
+        if(linearThreadIndex == 0 ) {
+            printf("Block index (%d, %d) Dense array = [%d, %d, %d, %d, %d]\n", blockIdx.x, blockIdx.y, circlesInChunk[0], circlesInChunk[1], circlesInChunk[2], circlesInChunk[3], circlesInChunk[4]);
+        }
+        // if(linearThreadIndex == 0) printf(Prefix)
 
         // Draw these circles to our pixel!
         int numCirclesInBatch = prefixSumOutput[THREADS_PER_BLOCK - 1] + 1; // Length of our dense array
+        
+        if(linearThreadIndex == 0) printf("Block (%d, %d) Num cirlces in Batch %d\n", blockIdx.x, blockIdx.y, numCirclesInBatch);
 
         for(int i = 0; i < numCirclesInBatch; i++) {
             int circle = circlesInChunk[i];
