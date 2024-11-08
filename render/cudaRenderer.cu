@@ -570,30 +570,32 @@ __global__ void kernelRenderCirclesFast() {
         }
 
         __syncthreads();
-        if(linearThreadIndex == 0) {
-            printf("Block index (%d, %d) Bit array = [%d, %d, %d, %d, %d]\n", blockIdx.x, blockIdx.y, prefixSumInput[0], prefixSumInput[1], prefixSumInput[2], prefixSumInput[3], prefixSumInput[4]);
-        }
+        // if(linearThreadIndex == 0) {
+        //     printf("Block index (%d, %d) Bit array = [%d, %d, %d, %d, %d]\n", blockIdx.x, blockIdx.y, prefixSumInput[0], prefixSumInput[1], prefixSumInput[2], prefixSumInput[3], prefixSumInput[4]);
+        // }
         // if(threadIdx.x == 0 && threadIdx.y == 0) printf("Made it after first sync threads\n");
 
         // Compute prefix sum to make indices mapping
         sharedMemExclusiveScan(linearThreadIndex, prefixSumInput, prefixSumOutput, prefixSumScratch, THREADS_PER_BLOCK);
         __syncthreads();
-        if(linearThreadIndex == 0 ) {
-            printf("Block index (%d, %d) Prefix sun array = [%d, %d, %d, %d, %d]\n", blockIdx.x, blockIdx.y, prefixSumOutput[0], prefixSumOutput[1], prefixSumOutput[2], prefixSumOutput[3], prefixSumOutput[4]);
-        }
+        // if(linearThreadIndex == 0 ) {
+        //     printf("Block index (%d, %d) Prefix sun array = [%d, %d, %d, %d, %d]\n", blockIdx.x, blockIdx.y, prefixSumOutput[0], prefixSumOutput[1], prefixSumOutput[2], prefixSumOutput[3], prefixSumOutput[4]);
+        // }
 
         // Create dense array of circles to process using bitmap and indices map (return length to not iterate too far)
         if(prefixSumInput[linearThreadIndex]) circlesInChunk[prefixSumOutput[linearThreadIndex]] = threadCircle;
         __syncthreads();
-        if(linearThreadIndex == 0 ) {
-            printf("Block index (%d, %d) Dense array = [%d, %d, %d, %d, %d]\n", blockIdx.x, blockIdx.y, circlesInChunk[0], circlesInChunk[1], circlesInChunk[2], circlesInChunk[3], circlesInChunk[4]);
-        }
+        // if(linearThreadIndex == 0 ) {
+        //     printf("Block index (%d, %d) Dense array = [%d, %d, %d, %d, %d]\n", blockIdx.x, blockIdx.y, circlesInChunk[0], circlesInChunk[1], circlesInChunk[2], circlesInChunk[3], circlesInChunk[4]);
+        // }
         // if(linearThreadIndex == 0) printf(Prefix)
 
         // Draw these circles to our pixel!
-        int numCirclesInBatch = prefixSumOutput[THREADS_PER_BLOCK - 1] + 1; // Length of our dense array
+        // Length of our dense array
+        int numCirclesInBatch = prefixSumOutput[THREADS_PER_BLOCK - 1];
+        if(prefixSumInput[THREADS_PER_BLOCK - 1]) numCirclesInBatch++;
         
-        if(linearThreadIndex == 0) printf("Block (%d, %d) Num cirlces in Batch %d\n", blockIdx.x, blockIdx.y, numCirclesInBatch);
+        // if(linearThreadIndex == 0) printf("Block (%d, %d) Num cirlces in Batch %d\n", blockIdx.x, blockIdx.y, numCirclesInBatch);
 
         for(int i = 0; i < numCirclesInBatch; i++) {
             int circle = circlesInChunk[i];
