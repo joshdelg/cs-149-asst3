@@ -14,8 +14,8 @@
 #include "sceneLoader.h"
 #include "util.h"
 
-#define THREADS_PER_DIM 16
-#define THREADS_PER_BLOCK THREADS_PER_DIM*THREADS_PER_DIM
+#define THREADS_PER_DIM 32
+#define THREADS_PER_BLOCK THREADS_PER_DIM * THREADS_PER_DIM
 
 #define SCAN_BLOCK_DIM   THREADS_PER_BLOCK  // needed by sharedMemExclusiveScan implementation
 #include "exclusiveScan.cu_inl"
@@ -392,125 +392,69 @@ shadePixel(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
     // END SHOULD-BE-ATOMIC REGION
 }
 
-__global__ void kernelBucketCircles(int* mask_ptr, int dim_buckets, short bucket_size_x, short bucket_size_y) {
-    int numCircles = cuConstRendererParams.numCircles;
+// Version for SNOWFLAKES scenes
+__device__ void shadePixelSnowflakes(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
+    float diffX = p.x - pixelCenter.x;
+    float diffY = p.y - pixelCenter.y;
+    float pixelDist = diffX * diffX + diffY * diffY;
+    float rad = cuConstRendererParams.radius[circleIndex];
+    float maxDist = rad * rad;
 
-    int index = blockIdx.x * blockDim.x + threadIdx.x;
+    if (pixelDist > maxDist) return;
 
-    if (index >= cuConstRendererParams.numCircles)
-        return;
+    const float kCircleMaxAlpha = .5f;
+    const float falloffScale = 4.f;
 
-    int index3 = 3 * index;
-    // printf("I'm calculating for cricle %d\n", index);
+    float normPixelDist = sqrt(pixelDist) / rad;
+    float3 rgb = lookupColor(normPixelDist);
+    float maxAlpha = kCircleMaxAlpha * fmaxf(fminf(0.6f + 0.4f * (1.f - p.z), 1.f), 0.f);
+    float alpha = maxAlpha * exp(-1.f * falloffScale * normPixelDist * normPixelDist);
 
-    // read position and radius
-    float3 p = *(float3*)(&cuConstRendererParams.position[index3]);
-    float  rad = cuConstRendererParams.radius[index];
+    float oneMinusAlpha = 1.f - alpha;
+    float4 existingColor = *imagePtr;
+    float4 newColor;
+    newColor.x = alpha * rgb.x + oneMinusAlpha * existingColor.x;
+    newColor.y = alpha * rgb.y + oneMinusAlpha * existingColor.y;
+    newColor.z = alpha * rgb.z + oneMinusAlpha * existingColor.z;
+    newColor.w = alpha + existingColor.w;
 
-    // compute the bounding box of the circle. The bound is in integer
-    // screen coordinates, so it's clamped to the edges of the screen.
-    short imageWidth = cuConstRendererParams.imageWidth;
-    short imageHeight = cuConstRendererParams.imageHeight;
-    short minX = static_cast<short>(imageWidth * (p.x - rad));
-    short maxX = static_cast<short>(imageWidth * (p.x + rad)) + 1;
-    short minY = static_cast<short>(imageHeight * (p.y - rad));
-    short maxY = static_cast<short>(imageHeight * (p.y + rad)) + 1;
-
-    // a bunch of clamps.  Is there a CUDA built-in for this?
-    short screenMinX = (minX > 0) ? ((minX < imageWidth) ? minX : imageWidth) : 0;
-    short screenMaxX = (maxX > 0) ? ((maxX < imageWidth) ? maxX : imageWidth) : 0;
-    short screenMinY = (minY > 0) ? ((minY < imageHeight) ? minY : imageHeight) : 0;
-    short screenMaxY = (maxY > 0) ? ((maxY < imageHeight) ? maxY : imageHeight) : 0;
-
-    //coordinates: (screenMinX, screenMinY), (screenMinX, screenMaxY), (screenMaxX,screenMinY), (screenMaxX,screenMaxY)
-    // if(
-    //     screenMinX < 0 || screenMinX > imageWidth ||
-    //     screenMinX < 0 || screenMinX > imageWidth ||
-    // )
-
-    //assign buckets, for all the coordinates 
-    int bucket_xidx_min = screenMinX/ bucket_size_x;
-    int bucket_xidx_max = screenMaxX/ bucket_size_x;
-    int bucket_yidx_min = screenMinY/ bucket_size_y;
-    int bucket_yidx_max = screenMaxY/ bucket_size_y;
-
-    // //set buckets, this ensures all the possible buckets are set 
-    // //flattened_index=bucket_xidx ×(num_buckets×num_circles)+bucket_yidx×num_circles+index
-    // mask_ptr[bucket_xidx_min * (dim_buckets * numCircles) + (bucket_yidx_min * numCircles) + index] = 1;
-    // mask_ptr[bucket_xidx_min * (dim_buckets * numCircles) + (bucket_yidx_max * numCircles) + index] = 1;
-    // mask_ptr[bucket_xidx_max * (dim_buckets * numCircles) + (bucket_yidx_min * numCircles) + index] = 1;
-    // mask_ptr[bucket_xidx_max * (dim_buckets * numCircles) + (bucket_yidx_max * numCircles) + index] = 1;
-
-    //need a for loop, as circles can span many boxes!!!
-    for (int bx = bucket_xidx_min; bx <= bucket_xidx_max; bx++) {
-        for (int by = bucket_yidx_min; by <= bucket_yidx_max; by++) {
-            // Calculate the flattened index for the mask array
-            int bucket_index = bx * (dim_buckets * numCircles) + by * numCircles + index;
-            printf("Adding circle %d with bounding box  x:(%d, %d) y:(%d, %d) to bucket location (%d, %d)\n", index, screenMinX, screenMaxX, screenMinY, screenMaxY, bx, by);
-            // Set the mask to indicate this circle is in this bucket
-            mask_ptr[bucket_index] = 1;
-        }
-}
+    // Atomic update to avoid race conditions
+    atomicAdd(&imagePtr->x, newColor.x);
+    atomicAdd(&imagePtr->y, newColor.y);
+    atomicAdd(&imagePtr->z, newColor.z);
+    atomicAdd(&imagePtr->w, newColor.w);
 }
 
-// kernelRenderCircles -- (CUDA device code)
-//
-// Each thread renders a pixel. This should order and atomicity
-__global__ void kernelRenderCircles(int* mask_ptr, int dim_buckets, short bucket_size_x, short bucket_size_y) {
+// Simple version of shadePixel
+__device__ void shadePixelSimple(int circleIndex, float2 pixelCenter, float3 p, float4* imagePtr) {
+    float diffX = p.x - pixelCenter.x;
+    float diffY = p.y - pixelCenter.y;
+    float pixelDist = diffX * diffX + diffY * diffY;
+    float rad = cuConstRendererParams.radius[circleIndex];
+    float maxDist = rad * rad;
 
-    short imageWidth = cuConstRendererParams.imageWidth;
-    short imageHeight = cuConstRendererParams.imageHeight;
-    int numCircles = cuConstRendererParams.numCircles;
+    if (pixelDist > maxDist) return;
 
-    int xIndex = blockIdx.x * blockDim.x + threadIdx.x;
-    int yIndex = blockIdx.y * blockDim.y + threadIdx.y;
+    int index3 = 3 * circleIndex;
+    float3 rgb = *(float3*)&(cuConstRendererParams.color[index3]);
+    float alpha = .5f;
+    float oneMinusAlpha = 1.f - alpha;
 
-    // Divide the screen into the same grid of buckets you used in kernelBucketCircles
-    int pixelBucketX = xIndex / bucket_size_x;
-    int pixelBucketY = yIndex / bucket_size_y;
+    float4 existingColor = *imagePtr;
+    float4 newColor;
+    newColor.x = alpha * rgb.x + oneMinusAlpha * existingColor.x;
+    newColor.y = alpha * rgb.y + oneMinusAlpha * existingColor.y;
+    newColor.z = alpha * rgb.z + oneMinusAlpha * existingColor.z;
+    newColor.w = alpha + existingColor.w;
 
-    // Find the circles in the Pixels Bucket 
-    int startIndex = pixelBucketX * (dim_buckets * cuConstRendererParams.numCircles) + pixelBucketY * numCircles;
-
-    if (xIndex >= imageWidth || yIndex >= imageHeight)
-        return;
-    
-    for(int index = 0; index < numCircles; index++) { //range max
-        if (mask_ptr[startIndex + index] == 1) { //check each of our indexes 
-            int index3 = 3 * index;
-            // read position and radius
-            float3 p = *(float3*)(&cuConstRendererParams.position[index3]);
-            float  rad = cuConstRendererParams.radius[index];
-
-            // compute the bounding box of the circle. The bound is in integer
-            // screen coordinates, so it's clamped to the edges of the screen.
-            short minX = static_cast<short>(imageWidth * (p.x - rad));
-            short maxX = static_cast<short>(imageWidth * (p.x + rad)) + 1;
-            short minY = static_cast<short>(imageHeight * (p.y - rad));
-            short maxY = static_cast<short>(imageHeight * (p.y + rad)) + 1;
-
-            // a bunch of clamps.  Is there a CUDA built-in for this?
-            short screenMinX = (minX > 0) ? ((minX < imageWidth) ? minX : imageWidth) : 0;
-            short screenMaxX = (maxX > 0) ? ((maxX < imageWidth) ? maxX : imageWidth) : 0;
-            short screenMinY = (minY > 0) ? ((minY < imageHeight) ? minY : imageHeight) : 0;
-            short screenMaxY = (maxY > 0) ? ((maxY < imageHeight) ? maxY : imageHeight) : 0;
-
-            // Check if pixel is in circles bounding box
-            if(screenMinX <= xIndex && xIndex <= screenMaxX && screenMinY <= yIndex && yIndex <= screenMaxY) {
-                // Check if actual intersect the circle
-                float invWidth = 1.f / imageWidth;
-                float invHeight = 1.f / imageHeight;
-
-                float2 pixelCenterNorm = make_float2(invWidth * (static_cast<float>(xIndex) + 0.5f),
-                                                invHeight * (static_cast<float>(yIndex) + 0.5f));
-
-                float4* imgPtr = (float4*)(&cuConstRendererParams.imageData[4 * (yIndex * imageWidth + xIndex)]);
-                
-                shadePixel(index, pixelCenterNorm, p, imgPtr);
-            }
-        }
-    }
+    // Atomic update to avoid race conditions
+    atomicAdd(&imagePtr->x, newColor.x);
+    atomicAdd(&imagePtr->y, newColor.y);
+    atomicAdd(&imagePtr->z, newColor.z);
+    atomicAdd(&imagePtr->w, newColor.w);
 }
+
+
 
 // Preconditions: Thread blocks are squares, 1 thread per pixel, total numThreads is power of 2
 __global__ void kernelRenderCirclesFast() {
@@ -610,7 +554,14 @@ __global__ void kernelRenderCirclesFast() {
             float4* imgPtr = (float4*)(&cuConstRendererParams.imageData[4 * (pixelY * imageWidth + pixelX)]);
             float3 p = *(float3*)(&cuConstRendererParams.position[circleIndex3]);
             
-            shadePixel(circle, pixelCenterNorm, p, imgPtr);
+            //FIND ME
+            if (cuConstRendererParams.sceneName == SNOWFLAKES || cuConstRendererParams.sceneName == SNOWFLAKES_SINGLE_FRAME) {
+                shadePixel(circle, pixelCenterNorm, p, imgPtr);
+            }
+            else {
+                //shadePixelSimple(circle, pixelCenterNorm, p, imgPtr);
+                shadePixel(circle, pixelCenterNorm, p, imgPtr);
+            }
         }
 
         __syncthreads();
@@ -833,7 +784,7 @@ CudaRenderer::render() {
     int imageHeight = image->height;
 
     // Chunking of the image is determined by blockDim because one thread must equal one pixel
-    dim3 blockDim(16, 16, 1);
+    dim3 blockDim(32, 32, 1);
 
     dim3 gridDim(
         (imageWidth + blockDim.x - 1) / blockDim.x,
